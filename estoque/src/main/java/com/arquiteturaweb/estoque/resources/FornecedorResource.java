@@ -11,8 +11,10 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.arquiteturaweb.estoque.entities.Fornecedor;
-import com.arquiteturaweb.estoque.entities.Produto;
 import com.arquiteturaweb.estoque.repositories.FornecedorRepository;
+import com.arquiteturaweb.estoque.services.FornecedorService;
+
+import java.util.List;
 
 @RestController
 @RequestMapping(value = "/fornecedor")
@@ -26,7 +28,7 @@ public class FornecedorResource {
 
     @GetMapping
     public List<Fornecedor> listar(){
-        return service.listar();
+        return service.findAll();
     }
 
     @GetMapping(value = "/{id}")
@@ -37,13 +39,13 @@ public class FornecedorResource {
 
     @PostMapping
     public Fornecedor salvar(@RequestBody Fornecedor fornecedor) {
-        return service.salvar(fornecedor);
+        return service.save(fornecedor);
     }
 
     @PutMapping("/{id}")
     public ResponseEntity<?>atualizar(@PathVariable Long id, @RequestBody Fornecedor fornecedor){
         try {
-            Fornecedor atualizado = service.atualizar(id, fornecedor);
+            Fornecedor atualizado = service.update(id, fornecedor);
             return ResponseEntity.ok(atualizado);
         } catch (Exception e) {
             return ResponseEntity.status(404).body(e.getMessage());
@@ -53,8 +55,8 @@ public class FornecedorResource {
     @DeleteMapping("/{id}")
     public ResponseEntity<?> deletar(@PathVariable long id) {
         try {
-            service.deletar(id);
-            return ResponseEntity.ok("Produto removido com sucesso");
+            service.delete(id);
+            return ResponseEntity.ok("Fornecedor removido com sucesso");
         } catch (Exception e) {
             return ResponseEntity.status(404).body(e.getMessage());
         }
