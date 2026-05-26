@@ -44,9 +44,9 @@ public class ProdutoResource {
     @PostMapping
     public ResponseEntity<Produto> insert(@RequestBody ProdutoRequestDTO obj) {
 
-        Produto produto = service.insert(obj);
+        Produto prodObj = service.insert(obj);
         URI uri = ServletUriComponentsBuilder.fromCurrentRequest().path("/{id}").buildAndExpand(obj.getId()).toUri();
-        return ResponseEntity.created(uri).body(produto);
+        return ResponseEntity.created(uri).body(prodObj);
 
     }
 
@@ -61,10 +61,10 @@ public class ProdutoResource {
 
     // update
     @PutMapping(value = "/{id}")
-    public ResponseEntity<Produto> update(@PathVariable Long id, @RequestBody Produto obj) {
+    public ResponseEntity<Produto> update(@PathVariable Long id, @RequestBody ProdutoRequestDTO obj) {
 
-        obj = service.update(id, obj);
-        return ResponseEntity.ok().body(obj);
+        Produto prodObj = service.update(id, obj);
+        return ResponseEntity.ok().body(prodObj);
 
     }
 

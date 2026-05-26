@@ -2,6 +2,7 @@ package com.arquiteturaweb.estoque.services;
 
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataIntegrityViolationException;
@@ -53,7 +54,7 @@ public class ProdutoService {
             
             return produtoRepository.save(produto);
         } catch (RuntimeException e) {
-            throw new ResourceNotFoundException(obj.getCategoriasId());
+            throw new ResourceNotFoundException(obj.getCategoriasId(), obj.getFornecedorId());
         }
 
     }
@@ -68,7 +69,7 @@ public class ProdutoService {
         }
     }
 
-    public Produto update(Long id, Produto obj) {
+    public Produto update(Long id, ProdutoRequestDTO obj) {
         try {
             Produto entity = produtoRepository.getReferenceById(id);
             updateData(entity, obj);
@@ -78,12 +79,17 @@ public class ProdutoService {
         }
     }
 
-    private void updateData(Produto entity, Produto obj) {
-        entity.setNome(obj.getNome());
-        entity.setDescricao(obj.getDescricao());
-        entity.setPreco(obj.getPreco());
-        entity.getCategorias().clear();
-        entity.getCategorias().addAll(obj.getCategorias());
+    private void updateData(Produto entity, ProdutoRequestDTO obj) {
+        try {
+            entity.setNome(obj.getNome());
+            entity.setDescricao(obj.getDescricao());
+            entity.setPreco(obj.getPreco());
+            entity.getCategorias().clear();
+            entity.getCategorias().addAll(obj.getCategoriasId().stream().map(id -> categoriaRepository.getReferenceById(id)).collect(Collectors.toList()));
+            entity.setFornecedor(fornecedorRepository.getReferenceById(obj.getFornecedorId()));
+        } catch (EntityNotFoundException e) {
+            throw new ResourceNotFoundException(obj.getCategoriasId(), obj.getFornecedorId());
+        }
     }
 
 }
