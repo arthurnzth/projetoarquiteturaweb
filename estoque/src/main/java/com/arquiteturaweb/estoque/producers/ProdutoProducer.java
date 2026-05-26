@@ -12,7 +12,11 @@ public class ProdutoProducer {
     @Autowired
     private KafkaTemplate<String, CadastroProdutoEvent> kafkaTemplate;
 
-    public void enviarEvento(CadastroProdutoEvent event) {
+    public ProdutoProducer(KafkaTemplate<String, CadastroProdutoEvent> kafkaTemplate) {
+        this.kafkaTemplate = kafkaTemplate;
+    }
+
+    public void enviarCadastroProdutoEvent(CadastroProdutoEvent event) {
         kafkaTemplate.send("cadastro-produto-topic", event);
     }
 
