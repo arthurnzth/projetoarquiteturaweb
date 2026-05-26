@@ -11,7 +11,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.arquiteturaweb.estoque.entities.Fornecedor;
-import com.arquiteturaweb.estoque.repositories.FornecedorRepository;
 import com.arquiteturaweb.estoque.services.FornecedorService;
 
 import java.util.List;
