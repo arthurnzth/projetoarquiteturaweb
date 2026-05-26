@@ -8,7 +8,12 @@ import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.stereotype.Service;
 
+import com.arquiteturaweb.estoque.entities.Categoria;
+import com.arquiteturaweb.estoque.entities.Fornecedor;
 import com.arquiteturaweb.estoque.entities.Produto;
+import com.arquiteturaweb.estoque.entities.dto.ProdutoRequestDTO;
+import com.arquiteturaweb.estoque.repositories.CategoriaRepository;
+import com.arquiteturaweb.estoque.repositories.FornecedorRepository;
 import com.arquiteturaweb.estoque.repositories.ProdutoRepository;
 import com.arquiteturaweb.estoque.services.exceptions.DatabaseException;
 import com.arquiteturaweb.estoque.services.exceptions.ResourceNotFoundException;
@@ -19,24 +24,43 @@ import jakarta.persistence.EntityNotFoundException;
 public class ProdutoService {
 
     @Autowired
-    private ProdutoRepository repository;
+    private ProdutoRepository produtoRepository;
+
+    @Autowired
+    private CategoriaRepository categoriaRepository;
+
+    @Autowired
+    private FornecedorRepository fornecedorRepository;
 
     public List<Produto> findAll() {
-        return repository.findAll();
+        return produtoRepository.findAll();
     }
 
     public Produto findById(Long id) {
-        Optional<Produto> obj = repository.findById(id);
+        Optional<Produto> obj = produtoRepository.findById(id);
         return obj.orElseThrow(() -> new ResourceNotFoundException(id));
     }
 
-    public Produto insert(Produto obj) {
-        return repository.save(obj);
+    public Produto insert(ProdutoRequestDTO obj) {
+
+        try {
+            List<Categoria> categorias = categoriaRepository.findAllById(obj.getCategoriasId());
+    
+            Fornecedor fornecedor = fornecedorRepository.findById(obj.getFornecedorId()).orElseThrow(() -> new ResourceNotFoundException(obj.getFornecedorId()));
+    
+            Produto produto = new Produto(obj.getId(), obj.getNome(), obj.getDescricao(), obj.getPreco(), fornecedor);
+            produto.getCategorias().addAll(categorias);
+            
+            return produtoRepository.save(produto);
+        } catch (RuntimeException e) {
+            throw new ResourceNotFoundException(obj.getCategoriasId());
+        }
+
     }
 
     public void delete(Long id) {
         try {
-            repository.deleteById(id);
+            produtoRepository.deleteById(id);
         } catch (EmptyResultDataAccessException e) {
             throw new ResourceNotFoundException(id);
         } catch (DataIntegrityViolationException e) {
@@ -46,9 +70,9 @@ public class ProdutoService {
 
     public Produto update(Long id, Produto obj) {
         try {
-            Produto entity = repository.getReferenceById(id);
+            Produto entity = produtoRepository.getReferenceById(id);
             updateData(entity, obj);
-            return repository.save(entity);
+            return produtoRepository.save(entity);
         } catch (EntityNotFoundException e) {
             throw new ResourceNotFoundException(id);
         }

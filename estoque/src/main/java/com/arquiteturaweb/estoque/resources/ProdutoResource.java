@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 import com.arquiteturaweb.estoque.entities.Produto;
+import com.arquiteturaweb.estoque.entities.dto.ProdutoRequestDTO;
 import com.arquiteturaweb.estoque.services.ProdutoService;
 
 @RestController
@@ -41,11 +42,11 @@ public class ProdutoResource {
 
     // insert
     @PostMapping
-    public ResponseEntity<Produto> insert(@RequestBody Produto obj) {
+    public ResponseEntity<Produto> insert(@RequestBody ProdutoRequestDTO obj) {
 
-        obj = service.insert(obj);
+        Produto produto = service.insert(obj);
         URI uri = ServletUriComponentsBuilder.fromCurrentRequest().path("/{id}").buildAndExpand(obj.getId()).toUri();
-        return ResponseEntity.created(uri).body(obj);
+        return ResponseEntity.created(uri).body(produto);
 
     }
 

@@ -8,9 +8,7 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
-import jakarta.persistence.JoinColumn;
-import jakarta.persistence.JoinTable;
-import jakarta.persistence.ManyToMany;
+import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
 
 @Entity
@@ -27,9 +25,7 @@ public class Fornecedor implements Serializable {
     private String endereco;
     private String telefone;
 
-    //Analisar melhor depois
-    @ManyToMany
-    @JoinTable(name = "tb_fornecedor_produto", joinColumns = @JoinColumn(name = "fornecedor_id"), inverseJoinColumns = @JoinColumn(name = "produto_id"))
+    @OneToMany(mappedBy = "fornecedor")
     private Set<Produto> produtos = new HashSet<>();
 
     public Fornecedor(){
