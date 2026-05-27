@@ -12,7 +12,8 @@ import org.springframework.stereotype.Service;
 import com.arquiteturaweb.estoque.entities.Categoria;
 import com.arquiteturaweb.estoque.entities.Fornecedor;
 import com.arquiteturaweb.estoque.entities.Produto;
-import com.arquiteturaweb.estoque.entities.dto.ProdutoRequestDTO;
+import com.arquiteturaweb.estoque.entities.dto.produto.ProdutoRequestDTO;
+import com.arquiteturaweb.estoque.entities.dto.produto.ProdutoResponseDTO;
 import com.arquiteturaweb.estoque.events.CadastroProdutoEvent;
 import com.arquiteturaweb.estoque.producers.ProdutoProducer;
 import com.arquiteturaweb.estoque.repositories.CategoriaRepository;
@@ -37,38 +38,42 @@ public class ProdutoService {
 
     private ProdutoProducer produtoProducer;
 
-    public List<Produto> findAll() {
+    public List<ProdutoResponseDTO> findAll() {
 
-        return produtoRepository.findAll();
+        List<Produto> produtos = produtoRepository.findAll();
+
+        return produtos.stream().map(p -> ProdutoResponseDTO.converterProduto(p)).collect(Collectors.toList());
 
     }
 
-    public Produto findById(Long id) {
+    public ProdutoResponseDTO findById(Long id) {
 
         Optional<Produto> obj = produtoRepository.findById(id);
-        return obj.orElseThrow(() -> new ResourceNotFoundException(id));
+        return ProdutoResponseDTO.converterProduto(obj.orElseThrow(() -> new ResourceNotFoundException(id)));
 
     }
 
-    public Produto insert(ProdutoRequestDTO obj) {
+    public ProdutoResponseDTO insert(ProdutoRequestDTO requestObj) {
 
         try {
-            List<Categoria> categorias = categoriaRepository.findAllById(obj.getCategoriasId());
+            List<Categoria> categorias = categoriaRepository.findAllById(requestObj.getCategoriasId());
     
-            Fornecedor fornecedor = fornecedorRepository.findById(obj.getFornecedorId()).orElseThrow(() -> new ResourceNotFoundException(obj.getFornecedorId()));
+            Fornecedor fornecedor = fornecedorRepository.findById(requestObj.getFornecedorId()).orElseThrow(() -> new ResourceNotFoundException(requestObj.getFornecedorId()));
     
-            Produto produto = new Produto(obj.getId(), obj.getNome(), obj.getDescricao(), obj.getPreco(), fornecedor);
+            Produto produto = new Produto(null, requestObj.getNome(), requestObj.getDescricao(), requestObj.getPreco(), fornecedor);
             produto.getCategorias().addAll(categorias);
 
             produtoRepository.save(produto);
 
             CadastroProdutoEvent event = new CadastroProdutoEvent(produto.getId());
             produtoProducer.enviarCadastroProdutoEvent(event);
+
+            ProdutoResponseDTO responseObj = ProdutoResponseDTO.converterProduto(produto);
             
-            return produto;
+            return responseObj;
 
         } catch (RuntimeException e) {
-            throw new ResourceNotFoundException(obj.getCategoriasId(), obj.getFornecedorId());
+            throw new ResourceNotFoundException(requestObj.getCategoriasId(), requestObj.getFornecedorId());
 
         }
 
@@ -89,12 +94,12 @@ public class ProdutoService {
 
     }
 
-    public Produto update(Long id, ProdutoRequestDTO obj) {
+    public ProdutoResponseDTO update(Long id, ProdutoRequestDTO obj) {
 
         try {
             Produto entity = produtoRepository.getReferenceById(id);
             updateData(entity, obj);
-            return produtoRepository.save(entity);
+            return ProdutoResponseDTO.converterProduto(produtoRepository.save(entity));
 
         } catch (EntityNotFoundException e) {
             throw new ResourceNotFoundException(id);

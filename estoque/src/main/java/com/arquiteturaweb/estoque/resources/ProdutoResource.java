@@ -15,8 +15,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
-import com.arquiteturaweb.estoque.entities.Produto;
-import com.arquiteturaweb.estoque.entities.dto.ProdutoRequestDTO;
+import com.arquiteturaweb.estoque.entities.dto.produto.ProdutoRequestDTO;
+import com.arquiteturaweb.estoque.entities.dto.produto.ProdutoResponseDTO;
 import com.arquiteturaweb.estoque.services.ProdutoService;
 
 @RestController
@@ -28,25 +28,25 @@ public class ProdutoResource {
 
     // findAll
     @GetMapping
-    public ResponseEntity<List<Produto>> findAll() {
-        List<Produto> list = service.findAll();
+    public ResponseEntity<List<ProdutoResponseDTO>> findAll() {
+        List<ProdutoResponseDTO> list = service.findAll();
         return ResponseEntity.ok().body(list);
     }
 
     // findById
     @GetMapping(value = "/{id}")
-    public ResponseEntity<Produto> findById(@PathVariable Long id) {
-        Produto obj = service.findById(id);
-        return ResponseEntity.ok().body(obj);
+    public ResponseEntity<ProdutoResponseDTO> findById(@PathVariable Long id) {
+        ProdutoResponseDTO responseObj = service.findById(id);
+        return ResponseEntity.ok().body(responseObj);
     }
 
     // insert
     @PostMapping
-    public ResponseEntity<Produto> insert(@RequestBody ProdutoRequestDTO obj) {
+    public ResponseEntity<ProdutoResponseDTO> insert(@RequestBody ProdutoRequestDTO obj) {
 
-        Produto prodObj = service.insert(obj);
-        URI uri = ServletUriComponentsBuilder.fromCurrentRequest().path("/{id}").buildAndExpand(obj.getId()).toUri();
-        return ResponseEntity.created(uri).body(prodObj);
+        ProdutoResponseDTO responseObj = service.insert(obj);
+        URI uri = ServletUriComponentsBuilder.fromCurrentRequest().path("/{id}").buildAndExpand(responseObj.getId()).toUri();
+        return ResponseEntity.created(uri).body(responseObj);
 
     }
 
@@ -61,10 +61,10 @@ public class ProdutoResource {
 
     // update
     @PutMapping(value = "/{id}")
-    public ResponseEntity<Produto> update(@PathVariable Long id, @RequestBody ProdutoRequestDTO obj) {
+    public ResponseEntity<ProdutoResponseDTO> update(@PathVariable Long id, @RequestBody ProdutoRequestDTO obj) {
 
-        Produto prodObj = service.update(id, obj);
-        return ResponseEntity.ok().body(prodObj);
+        ProdutoResponseDTO responseObj = service.update(id, obj);
+        return ResponseEntity.ok().body(responseObj);
 
     }
 
