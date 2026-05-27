@@ -10,11 +10,13 @@ import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
-import com.arquiteturaweb.estoque.entities.Fornecedor;
+import com.arquiteturaweb.estoque.entities.dto.fornecedor.FornecedorRequestDTO;
 import com.arquiteturaweb.estoque.entities.dto.fornecedor.FornecedorResponseDTO;
 import com.arquiteturaweb.estoque.services.FornecedorService;
 
+import java.net.URI;
 import java.util.List;
 
 @RestController
@@ -37,18 +39,19 @@ public class FornecedorResource {
     }
 
     @PostMapping
-    public Fornecedor salvar(@RequestBody Fornecedor fornecedor) {
-        return service.save(fornecedor);
+    public ResponseEntity<FornecedorResponseDTO> salvar(@RequestBody FornecedorRequestDTO requestFornecedor) {
+        
+        FornecedorResponseDTO responseObj = service.save(requestFornecedor);
+        URI uri = ServletUriComponentsBuilder.fromCurrentRequest().path("/{id}").buildAndExpand(responseObj.getId()).toUri();
+        return ResponseEntity.created(uri).body(responseObj);
     }
 
-    @PutMapping("/{id}")
-    public ResponseEntity<?>atualizar(@PathVariable Long id, @RequestBody Fornecedor fornecedor){
-        try {
-            Fornecedor atualizado = service.update(id, fornecedor);
+    @PutMapping(value = "/{id}")
+    public ResponseEntity<FornecedorResponseDTO> atualizar(@PathVariable Long id, @RequestBody FornecedorRequestDTO requestFornecedor){
+        
+            FornecedorResponseDTO atualizado = service.update(id, requestFornecedor);
             return ResponseEntity.ok(atualizado);
-        } catch (Exception e) {
-            return ResponseEntity.status(404).body(e.getMessage());
-        }
+        
     }
 
     @DeleteMapping("/{id}")
