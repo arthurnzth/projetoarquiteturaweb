@@ -11,6 +11,7 @@ import com.arquiteturaweb.estoque.entities.Estoque;
 import com.arquiteturaweb.estoque.entities.Produto;
 import com.arquiteturaweb.estoque.entities.dto.estoque.EstoqueResponseDTO;
 import com.arquiteturaweb.estoque.repositories.EstoqueRepository;
+import com.arquiteturaweb.estoque.repositories.ProdutoRepository;
 import com.arquiteturaweb.estoque.services.exceptions.ResourceNotFoundException;
 
 @Service
@@ -18,6 +19,9 @@ public class EstoqueService {
 
     @Autowired
     private EstoqueRepository estoqueRepository;
+
+    @Autowired
+    private ProdutoRepository produtoRepository;
 
     public List<EstoqueResponseDTO> findAll() {
 
@@ -33,10 +37,15 @@ public class EstoqueService {
 
     }
 
-    public void criarEstoqueInicial(Produto produto) {
+    public void criarEstoqueInicial(Long produtoId) {
 
-        Estoque estoque = new Estoque(null, produto);
+        Estoque estoque = new Estoque();
+        Produto produto = produtoRepository.findById(produtoId).orElseThrow(() -> new ResourceNotFoundException(produtoId));
+        estoque.setProduto(produto);
+        estoque.setQuantidade(0L);
         estoqueRepository.save(estoque);
+        produto.setEstoque(estoque);
+        produtoRepository.save(produto);
 
     }
 

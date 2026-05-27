@@ -4,7 +4,6 @@ import java.io.Serializable;
 import java.util.HashSet;
 import java.util.Set;
 
-import jakarta.persistence.CascadeType;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -38,7 +37,7 @@ public class Produto implements Serializable {
     @JoinColumn(name = "fornecedor_id")
     private Fornecedor fornecedor;
 
-    @OneToOne(mappedBy = "produto", cascade = CascadeType.ALL)
+    @OneToOne(mappedBy = "produto")
     private Estoque estoque;
 
     public Produto() {

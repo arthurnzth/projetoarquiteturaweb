@@ -10,7 +10,7 @@ import com.arquiteturaweb.estoque.events.CadastroProdutoEvent;
 public class ProdutoProducer {
 
     @Autowired
-    private KafkaTemplate<String, CadastroProdutoEvent> kafkaTemplate;
+    private final KafkaTemplate<String, CadastroProdutoEvent> kafkaTemplate;
 
     public ProdutoProducer(KafkaTemplate<String, CadastroProdutoEvent> kafkaTemplate) {
         this.kafkaTemplate = kafkaTemplate;

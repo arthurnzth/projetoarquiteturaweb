@@ -95,7 +95,9 @@ public class ProdutoResponseDTO implements Serializable{
         responseObj.setPreco(produto.getPreco());
         responseObj.getCategorias().addAll(produto.getCategorias().stream().<CategoriaResumoDTO>map(c -> CategoriaResumoDTO.converterCategoria(c)).collect(Collectors.toList()));
         responseObj.setFornecedor(FornecedorResumoDTO.converterFornecedor(produto.getFornecedor()));
-        responseObj.setEstoque(EstoqueResumoDTO.converterEstoque(produto.getEstoque()));
+        if (produto.getEstoque() != null) {
+            responseObj.setEstoque(EstoqueResumoDTO.converterEstoque(produto.getEstoque()));
+        }
         return responseObj;
     }
 

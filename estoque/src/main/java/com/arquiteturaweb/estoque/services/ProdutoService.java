@@ -36,6 +36,7 @@ public class ProdutoService {
     @Autowired
     private FornecedorRepository fornecedorRepository;
 
+    @Autowired
     private ProdutoProducer produtoProducer;
 
     public List<ProdutoResponseDTO> findAll() {
@@ -63,18 +64,23 @@ public class ProdutoService {
             Produto produto = new Produto(null, requestObj.getNome(), requestObj.getDescricao(), requestObj.getPreco(), fornecedor);
             produto.getCategorias().addAll(categorias);
 
-            produtoRepository.save(produto);
+            Produto produtoSalvo = produtoRepository.save(produto);
 
-            CadastroProdutoEvent event = new CadastroProdutoEvent(produto.getId());
+            Thread.sleep(1500L);
+
+            CadastroProdutoEvent event = new CadastroProdutoEvent(produtoSalvo.getId());
             produtoProducer.enviarCadastroProdutoEvent(event);
 
-            ProdutoResponseDTO responseObj = ProdutoResponseDTO.converterProduto(produto);
+            ProdutoResponseDTO responseObj = ProdutoResponseDTO.converterProduto(produtoSalvo);
             
             return responseObj;
 
         } catch (RuntimeException e) {
-            throw new ResourceNotFoundException(requestObj.getCategoriasId(), requestObj.getFornecedorId());
+            e.printStackTrace();
+            throw new ResourceNotFoundException(requestObj.getFornecedorId());
 
+        } catch (InterruptedException e) {
+            throw new DatabaseException(e.getMessage());
         }
 
     }
@@ -119,7 +125,7 @@ public class ProdutoService {
             entity.setFornecedor(fornecedorRepository.getReferenceById(obj.getFornecedorId()));
 
         } catch (EntityNotFoundException e) {
-            throw new ResourceNotFoundException(obj.getCategoriasId(), obj.getFornecedorId());
+            throw new ResourceNotFoundException(obj.getFornecedorId());
 
         }
 
