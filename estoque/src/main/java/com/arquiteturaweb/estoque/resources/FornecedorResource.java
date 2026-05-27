@@ -20,7 +20,7 @@ import java.net.URI;
 import java.util.List;
 
 @RestController
-@RequestMapping(value = "/fornecedor")
+@RequestMapping(value = "/fornecedores")
 public class FornecedorResource {
     
     @Autowired

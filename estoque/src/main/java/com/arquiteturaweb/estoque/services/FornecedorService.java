@@ -9,11 +9,8 @@ import java.util.stream.Collectors;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import com.arquiteturaweb.estoque.entities.Fornecedor;
-import com.arquiteturaweb.estoque.entities.Produto;
 import com.arquiteturaweb.estoque.entities.dto.fornecedor.FornecedorRequestDTO;
 import com.arquiteturaweb.estoque.entities.dto.fornecedor.FornecedorResponseDTO;
-import com.arquiteturaweb.estoque.entities.dto.produto.ProdutoRequestDTO;
-import com.arquiteturaweb.estoque.entities.dto.produto.ProdutoResponseDTO;
 import com.arquiteturaweb.estoque.repositories.FornecedorRepository;
 import com.arquiteturaweb.estoque.services.exceptions.DatabaseException;
 import com.arquiteturaweb.estoque.services.exceptions.ResourceNotFoundException;
