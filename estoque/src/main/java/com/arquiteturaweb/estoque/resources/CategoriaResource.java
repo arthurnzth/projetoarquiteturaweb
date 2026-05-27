@@ -15,7 +15,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
-import com.arquiteturaweb.estoque.entities.Categoria;
+import com.arquiteturaweb.estoque.entities.dto.categoria.CategoriaRequestDTO;
+import com.arquiteturaweb.estoque.entities.dto.categoria.CategoriaResponseDTO;
 import com.arquiteturaweb.estoque.services.CategoriaService;
 
 @RestController
@@ -27,24 +28,26 @@ public class CategoriaResource {
 
     // findAll
     @GetMapping
-    public ResponseEntity<List<Categoria>> findAll() {
-        List<Categoria> list = service.findAll();
+    public ResponseEntity<List<CategoriaResponseDTO>> findAll() {
+        List<CategoriaResponseDTO> list = service.findAll();
         return ResponseEntity.ok().body(list);
     }
 
     // findById
     @GetMapping(value = "/{id}")
-    public ResponseEntity<Categoria> findById(@PathVariable Long id) {
-        Categoria obj = service.findById(id);
+    public ResponseEntity<CategoriaResponseDTO> findById(@PathVariable Long id) {
+        CategoriaResponseDTO obj = service.findById(id);
         return ResponseEntity.ok().body(obj);
     }
 
     // insert
     @PostMapping
-    public ResponseEntity<Categoria> insert(@RequestBody Categoria obj) {
-        obj = service.insert(obj);
-        URI uri = ServletUriComponentsBuilder.fromCurrentRequest().path("/{id}").buildAndExpand(obj.getId()).toUri();
-        return ResponseEntity.created(uri).body(obj);
+    public ResponseEntity<CategoriaResponseDTO> insert(@RequestBody CategoriaRequestDTO obj) {
+        
+        CategoriaResponseDTO responseObj = service.insert(obj);
+        URI uri = ServletUriComponentsBuilder.fromCurrentRequest().path("/{id}").buildAndExpand(responseObj.getId()).toUri();
+        return ResponseEntity.created(uri).body(responseObj);
+
     }
 
     // delete
@@ -56,9 +59,9 @@ public class CategoriaResource {
 
     // update
     @PutMapping(value = "/{id}")
-    public ResponseEntity<Categoria> update(@PathVariable Long id, @RequestBody Categoria obj) {
-        obj = service.update(id, obj);
-        return ResponseEntity.ok().body(obj);
+    public ResponseEntity<CategoriaResponseDTO> update(@PathVariable Long id, @RequestBody CategoriaRequestDTO obj) {
+        CategoriaResponseDTO reponseObj = service.update(id, obj);
+        return ResponseEntity.ok().body(reponseObj);
     }
 
 }

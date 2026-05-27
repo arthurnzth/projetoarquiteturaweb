@@ -2,6 +2,7 @@ package com.arquiteturaweb.estoque.services;
 
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataIntegrityViolationException;
@@ -9,6 +10,8 @@ import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.stereotype.Service;
 
 import com.arquiteturaweb.estoque.entities.Categoria;
+import com.arquiteturaweb.estoque.entities.dto.categoria.CategoriaRequestDTO;
+import com.arquiteturaweb.estoque.entities.dto.categoria.CategoriaResponseDTO;
 import com.arquiteturaweb.estoque.repositories.CategoriaRepository;
 import com.arquiteturaweb.estoque.services.exceptions.DatabaseException;
 import com.arquiteturaweb.estoque.services.exceptions.ResourceNotFoundException;
@@ -19,42 +22,59 @@ import jakarta.persistence.EntityNotFoundException;
 public class CategoriaService {
 
     @Autowired
-    private CategoriaRepository repository;
+    private CategoriaRepository categoriaRepository;
 
-    public List<Categoria> findAll() {
-        return repository.findAll();
+    public List<CategoriaResponseDTO> findAll() {
+
+        List<Categoria> categorias = categoriaRepository.findAll();
+        return categorias.stream().map(c -> CategoriaResponseDTO.converterCategoria(c)).collect(Collectors.toList());
+
     }
 
-    public Categoria findById(Long id) {
-        Optional<Categoria> obj = repository.findById(id);
-        return obj.orElseThrow(() -> new ResourceNotFoundException(id));
+    public CategoriaResponseDTO findById(Long id) {
+
+        Optional<Categoria> obj = categoriaRepository.findById(id);
+        return CategoriaResponseDTO.converterCategoria(obj.orElseThrow(() -> new ResourceNotFoundException(id)));
+
     }
 
-    public Categoria insert(Categoria obj) {
-        return repository.save(obj);
+    public CategoriaResponseDTO insert(CategoriaRequestDTO obj) {
+
+        Categoria categoria = new Categoria(null, obj.getNome());
+        return CategoriaResponseDTO.converterCategoria(categoriaRepository.save(categoria));
+
     }
 
     public void delete(Long id) {
+
         try {
-            repository.deleteById(id);
+            categoriaRepository.deleteById(id);
+
         } catch (EmptyResultDataAccessException e) {
             throw new ResourceNotFoundException(id);
+
         } catch (DataIntegrityViolationException e) {
             throw new DatabaseException(e.getMessage());
+
         }
+
     }
 
-    public Categoria update(Long id, Categoria obj) {
+    public CategoriaResponseDTO update(Long id, CategoriaRequestDTO obj) {
+
         try {
-            Categoria entity = repository.getReferenceById(id);
+            Categoria entity = categoriaRepository.getReferenceById(id);
             updateData(entity, obj);
-            return repository.save(entity);
+            return CategoriaResponseDTO.converterCategoria(categoriaRepository.save(entity));
+
         } catch (EntityNotFoundException e) {
             throw new ResourceNotFoundException(id);
+
         }
+
     }
 
-    private void updateData(Categoria entity, Categoria obj) {
+    private void updateData(Categoria entity, CategoriaRequestDTO obj) {
         entity.setNome(obj.getNome());
     }
 
