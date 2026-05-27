@@ -1,8 +1,12 @@
 package com.arquiteturaweb.estoque.entities.dto.categoria;
 
+import java.io.Serializable;
+
 import com.arquiteturaweb.estoque.entities.Categoria;
 
-public class CategoriaResumoDTO {
+public class CategoriaResumoDTO implements Serializable{
+
+    private static final long serialVersionUID = 1L;
 
     private Long id;
     private String nome;

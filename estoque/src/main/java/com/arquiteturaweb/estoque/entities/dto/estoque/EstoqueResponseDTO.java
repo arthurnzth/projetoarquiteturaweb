@@ -1,9 +1,13 @@
 package com.arquiteturaweb.estoque.entities.dto.estoque;
 
+import java.io.Serializable;
+
 import com.arquiteturaweb.estoque.entities.Estoque;
 import com.arquiteturaweb.estoque.entities.dto.produto.ProdutoResumoDTO;
 
-public class EstoqueResponseDTO {
+public class EstoqueResponseDTO implements Serializable{
+
+    private static final long serialVersionUID = 1L;
 
     private Long id;
     private Long quantidade;

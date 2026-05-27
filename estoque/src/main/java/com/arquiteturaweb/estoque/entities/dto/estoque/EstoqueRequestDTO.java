@@ -1,6 +1,10 @@
 package com.arquiteturaweb.estoque.entities.dto.estoque;
 
-public class EstoqueRequestDTO {
+import java.io.Serializable;
+
+public class EstoqueRequestDTO implements Serializable{
+
+    private static final long serialVersionUID = 1L;
 
     private Long quantidade;
     

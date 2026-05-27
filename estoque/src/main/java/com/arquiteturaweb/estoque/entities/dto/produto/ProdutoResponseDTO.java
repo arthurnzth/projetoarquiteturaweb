@@ -1,5 +1,6 @@
 package com.arquiteturaweb.estoque.entities.dto.produto;
 
+import java.io.Serializable;
 import java.util.HashSet;
 import java.util.Set;
 import java.util.stream.Collectors;
@@ -9,7 +10,9 @@ import com.arquiteturaweb.estoque.entities.dto.categoria.CategoriaResumoDTO;
 import com.arquiteturaweb.estoque.entities.dto.estoque.EstoqueResumoDTO;
 import com.arquiteturaweb.estoque.entities.dto.fornecedor.FornecedorResumoDTO;
 
-public class ProdutoResponseDTO {
+public class ProdutoResponseDTO implements Serializable{
+
+    private static final long serialVersionUID = 1L;
 
     private Long id;
     private String nome;

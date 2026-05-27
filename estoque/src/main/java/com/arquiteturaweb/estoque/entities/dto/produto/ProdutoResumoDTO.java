@@ -1,8 +1,12 @@
 package com.arquiteturaweb.estoque.entities.dto.produto;
 
+import java.io.Serializable;
+
 import com.arquiteturaweb.estoque.entities.Produto;
 
-public class ProdutoResumoDTO {
+public class ProdutoResumoDTO implements Serializable{
+
+    private static final long serialVersionUID = 1L;
 
     private Long id;
     private String nome;

@@ -1,29 +1,32 @@
 package com.arquiteturaweb.estoque.entities.dto.fornecedor;
 
+import java.io.Serializable;
+import java.util.HashSet;
 import java.util.Set;
 import java.util.stream.Collectors;
 
 import com.arquiteturaweb.estoque.entities.Fornecedor;
 import com.arquiteturaweb.estoque.entities.dto.produto.ProdutoResumoDTO;
 
-public class FornecedorResponseDTO {
+public class FornecedorResponseDTO implements Serializable{
+
+    private static final long serialVersionUID = 1L;
 
     private Long id;
     private String nome;
     private String endereco;
     private String telefone;
-    private Set<ProdutoResumoDTO> produtos;
+    private Set<ProdutoResumoDTO> produtos = new HashSet<>();
 
     public FornecedorResponseDTO() {
 
     }
 
-    public FornecedorResponseDTO(Long id, String nome, String endereco, String telefone, Set<ProdutoResumoDTO> produtos) {
+    public FornecedorResponseDTO(Long id, String nome, String endereco, String telefone) {
         this.id = id;
         this.nome = nome;
         this.endereco = endereco;
         this.telefone = telefone;
-        this.produtos = produtos;
     }
 
     public Long getId() {

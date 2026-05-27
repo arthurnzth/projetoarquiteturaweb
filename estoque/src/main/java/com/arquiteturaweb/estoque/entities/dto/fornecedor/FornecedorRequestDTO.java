@@ -1,6 +1,10 @@
 package com.arquiteturaweb.estoque.entities.dto.fornecedor;
 
-public class FornecedorRequestDTO {
+import java.io.Serializable;
+
+public class FornecedorRequestDTO implements Serializable{
+
+    private static final long serialVersionUID = 1L;
 
     private String nome;
     private String endereco;
