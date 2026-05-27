@@ -4,11 +4,24 @@ import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
 
 import com.arquiteturaweb.estoque.entities.Fornecedor;
+import com.arquiteturaweb.estoque.entities.Produto;
+import com.arquiteturaweb.estoque.entities.dto.fornecedor.FornecedorRequestDTO;
+import com.arquiteturaweb.estoque.entities.dto.fornecedor.FornecedorResponseDTO;
+import com.arquiteturaweb.estoque.entities.dto.produto.ProdutoRequestDTO;
+import com.arquiteturaweb.estoque.entities.dto.produto.ProdutoResponseDTO;
 import com.arquiteturaweb.estoque.repositories.FornecedorRepository;
+import com.arquiteturaweb.estoque.services.exceptions.DatabaseException;
+import com.arquiteturaweb.estoque.services.exceptions.ResourceNotFoundException;
+
+import jakarta.persistence.EntityNotFoundException;
+
+import org.springframework.dao.DataIntegrityViolationException;
+import org.springframework.dao.EmptyResultDataAccessException;
 
 @Service
 public class FornecedorService {
@@ -20,53 +33,71 @@ public class FornecedorService {
         this.fornecedorRepositorio = repository;
     }
 
-    //FUNCTIONS GET
-    public List<Fornecedor> findAll() {
-        return fornecedorRepositorio.findAll();
+    // FUNCTIONS GET
+    public List<FornecedorResponseDTO> findAll() {
+
+        List<Fornecedor> fornecedores = fornecedorRepositorio.findAll();
+
+        return fornecedores.stream().map(f -> FornecedorResponseDTO.converterFornecedor(f))
+                .collect(Collectors.toList());
     }
 
-    public Fornecedor findById(Long id) {
-        Optional<Fornecedor> obj = fornecedorRepositorio.findById(id);
-        return obj.get();
+    public FornecedorResponseDTO findById(Long id) {
+        Optional<Fornecedor> objeto = fornecedorRepositorio.findById(id);
+        return FornecedorResponseDTO.converterFornecedor(objeto.orElseThrow(() -> new ResourceNotFoundException(id)));
     }
 
-    //FUNCTIONS POST
-    public Fornecedor save(Fornecedor fornecedor) {
-        if (fornecedor.getNomeFornecedor() == null || fornecedor.getNomeFornecedor().isBlank()) {
-            throw new IllegalArgumentException("Nome do fornecedor é obrigatório");
+    // FUNCTIONS POST
+    public FornecedorResponseDTO save(FornecedorRequestDTO requestObj) {
+        
+        try{
+            Fornecedor fornecedor = new Fornecedor(null, requestObj.getNome(), requestObj.getEndereco(), requestObj.getTelefone());
+
+            fornecedorRepositorio.save(fornecedor);
+
+            FornecedorResponseDTO responseObj = FornecedorResponseDTO.converterFornecedor(fornecedor);
+            
+            return responseObj;
+        }catch(DataIntegrityViolationException e) {
+            throw new RuntimeException("Dados inválidos para salvar fornecedor");
         }
-
-        if (fornecedor.getEnderecoFornecedor() == null || fornecedor.getEnderecoFornecedor().isBlank()) {
-            throw new IllegalArgumentException("Endereço inválido");
-        }
-
-        if (fornecedor.getTelefoneFornecedor() == null || fornecedor.getTelefoneFornecedor().isBlank()) {
-            throw new IllegalArgumentException("Telefone inválido");
-        }
-
-        return fornecedorRepositorio.save(fornecedor);
     }
 
-    //FUNCTIONS PUT
-    public Fornecedor update(Long id, Fornecedor dados){
 
-        Fornecedor fornecedor = fornecedorRepositorio.findById(id).orElseThrow(() -> new RuntimeException("Fornecedor não encontrado"));
 
-        // Atualiza os campos
-        fornecedor.setNomeFornecedor(dados.getNomeFornecedor());
-        fornecedor.setEnderecoFornecedor(dados.getEnderecoFornecedor());
-        fornecedor.setTelefoneFornecedor(dados.getTelefoneFornecedor());
-
-        return fornecedorRepositorio.save(fornecedor);
+    // FUNCTIONS PUT
+    public FornecedorResponseDTO update(Long id, FornecedorRequestDTO requestData){
+        try{
+            Fornecedor fornecedor = fornecedorRepositorio.getReferenceById(id);
+            updateData(fornecedor, requestData);
+            return FornecedorResponseDTO.converterFornecedor(fornecedorRepositorio.save(fornecedor));
+        }catch (EntityNotFoundException e) {
+            throw new ResourceNotFoundException(id);
+        }
     }
 
-    //FUNCTIONS DELETE
+    private void updateData(Fornecedor entity, FornecedorRequestDTO obj){
+        try {
+            entity.setNomeFornecedor(obj.getNome());
+            entity.setEnderecoFornecedor(obj.getEndereco());
+            entity.setTelefoneFornecedor(obj.getTelefone());
+        } catch (EntityNotFoundException e) {
+            throw new ResourceNotFoundException("Dados inválidos para salvar fornecedor");
+        }
+    }
+
+    // FUNCTIONS DELETE
     public void delete(Long id) {
-        Fornecedor fornecedor = fornecedorRepositorio.findById(id).orElse(null);
-        if(fornecedor == null) {
-            throw new RuntimeException("Fornecedor não encontrado");
+        try {
+            fornecedorRepositorio.deleteById(id);
+        
+        } catch (EmptyResultDataAccessException e) {
+            throw new ResourceNotFoundException(id);
+
+        } catch (DataIntegrityViolationException e) {
+            throw new DatabaseException(e.getMessage());
+
         }
-        fornecedorRepositorio.delete(fornecedor);
     }
 
 }

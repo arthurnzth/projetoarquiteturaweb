@@ -1,5 +1,6 @@
 package com.arquiteturaweb.estoque.resources;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -11,6 +12,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.arquiteturaweb.estoque.entities.Fornecedor;
+import com.arquiteturaweb.estoque.entities.dto.fornecedor.FornecedorResponseDTO;
 import com.arquiteturaweb.estoque.services.FornecedorService;
 
 import java.util.List;
@@ -19,20 +21,18 @@ import java.util.List;
 @RequestMapping(value = "/fornecedor")
 public class FornecedorResource {
     
-    private final FornecedorService service;
-    
-    public FornecedorResource(FornecedorService service){
-        this.service = service;
-    }
+    @Autowired
+    private FornecedorService service;
 
     @GetMapping
-    public List<Fornecedor> listar(){
-        return service.findAll();
+    public ResponseEntity<List<FornecedorResponseDTO>> findAll(){
+        List<FornecedorResponseDTO> fornecedorLista = service.findAll();
+        return ResponseEntity.ok().body(fornecedorLista);
     }
 
     @GetMapping(value = "/{id}")
-    public ResponseEntity<Fornecedor> findById(@PathVariable Long id) {
-        Fornecedor obj = service.findById(id);
+    public ResponseEntity<FornecedorResponseDTO> findById(@PathVariable Long id) {
+        FornecedorResponseDTO obj = service.findById(id);
         return ResponseEntity.ok().body(obj);
     }
 
