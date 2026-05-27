@@ -9,7 +9,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.arquiteturaweb.estoque.entities.Estoque;
+import com.arquiteturaweb.estoque.entities.dto.estoque.EstoqueResponseDTO;
 import com.arquiteturaweb.estoque.services.EstoqueService;
 
 @RestController
@@ -21,16 +21,16 @@ public class EstoqueResource {
 
     // findAll
     @GetMapping
-    public ResponseEntity<List<Estoque>> findAll() {
-        List<Estoque> list = service.findAll();
+    public ResponseEntity<List<EstoqueResponseDTO>> findAll() {
+        List<EstoqueResponseDTO> list = service.findAll();
         return ResponseEntity.ok().body(list);
     }
 
     // findById
     @GetMapping(value = "/{id}")
-    public ResponseEntity<Estoque> findById(@PathVariable Long id) {
-        Estoque obj = service.findById(id);
-        return ResponseEntity.ok().body(obj);
+    public ResponseEntity<EstoqueResponseDTO> findById(@PathVariable Long id) {
+        EstoqueResponseDTO responseObj = service.findById(id);
+        return ResponseEntity.ok().body(responseObj);
     }
 
 }
