@@ -11,7 +11,3 @@ Projeto desenvolvido para a disciplina de Arquitetura de Aplicações Web, com o
 - [Eduarda Nunis](https://github.com/EduardaSSN): Tester Unitário
 - [Maria Luiza Matos](https://github.com/Lubmatos): Tester Funcional e Unitário
 - [Pedro Lucas](https://github.com/Pedro-Ani-Lucas): Desenvolvedor
-
----
-
-## 
