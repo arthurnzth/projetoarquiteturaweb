@@ -1,23 +1,25 @@
 package com.arquiteturaweb.estoque.entities.dto.categoria;
 
+import java.util.HashSet;
 import java.util.Set;
+import java.util.stream.Collectors;
 
+import com.arquiteturaweb.estoque.entities.Categoria;
 import com.arquiteturaweb.estoque.entities.dto.produto.ProdutoResumoDTO;
 
 public class CategoriaResponseDTO {
 
     private Long id;
     private String nome;
-    private Set<ProdutoResumoDTO> produtos;
+    private Set<ProdutoResumoDTO> produtos = new HashSet<>();
 
     public CategoriaResponseDTO() {
 
     }
 
-    public CategoriaResponseDTO(Long id, String nome, Set<ProdutoResumoDTO> produtos) {
+    public CategoriaResponseDTO(Long id, String nome) {
         this.id = id;
         this.nome = nome;
-        this.produtos = produtos;
     }
 
     public Long getId() {
@@ -40,8 +42,12 @@ public class CategoriaResponseDTO {
         return produtos;
     }
 
-    public void setProdutos(Set<ProdutoResumoDTO> produtos) {
-        this.produtos = produtos;
+    public static CategoriaResponseDTO converterCategoria(Categoria categoria) {
+        CategoriaResponseDTO responseObj = new CategoriaResponseDTO();
+        responseObj.setId(categoria.getId());
+        responseObj.setNome(categoria.getNome());
+        responseObj.getProdutos().addAll(categoria.getProdutos().stream().<ProdutoResumoDTO>map(p -> ProdutoResumoDTO.converterProduto(p)).collect(Collectors.toList()));
+        return responseObj;
     }
 
 }

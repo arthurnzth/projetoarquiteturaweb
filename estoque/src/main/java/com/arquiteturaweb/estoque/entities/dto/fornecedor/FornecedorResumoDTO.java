@@ -1,5 +1,7 @@
 package com.arquiteturaweb.estoque.entities.dto.fornecedor;
 
+import com.arquiteturaweb.estoque.entities.Fornecedor;
+
 public class FornecedorResumoDTO {
 
     private Long id;
@@ -28,6 +30,13 @@ public class FornecedorResumoDTO {
 
     public void setNome(String nome) {
         this.nome = nome;
+    }
+
+    public static FornecedorResumoDTO converterFornecedor(Fornecedor fornecedor) {
+        FornecedorResumoDTO resumoObj = new FornecedorResumoDTO();
+        resumoObj.setId(fornecedor.getIdFornecedor());
+        resumoObj.setNome(fornecedor.getNomeFornecedor());
+        return resumoObj;
     }
     
 }

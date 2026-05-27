@@ -1,5 +1,7 @@
 package com.arquiteturaweb.estoque.entities.dto.estoque;
 
+import com.arquiteturaweb.estoque.entities.Estoque;
+
 public class EstoqueResumoDTO {
 
     private Long id;
@@ -38,6 +40,14 @@ public class EstoqueResumoDTO {
 
     public void setQuantidade(Long quantidade) {
         this.quantidade = quantidade;
+    }
+
+    public static EstoqueResumoDTO converterEstoque(Estoque estoque) {
+        EstoqueResumoDTO resumoObj = new EstoqueResumoDTO();
+        resumoObj.setId(estoque.getId());
+        resumoObj.setProdutoNome(estoque.getProduto().getNome());
+        resumoObj.setQuantidade(estoque.getQuantidade());
+        return resumoObj;
     }
 
 }

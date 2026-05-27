@@ -1,5 +1,6 @@
 package com.arquiteturaweb.estoque.entities.dto.estoque;
 
+import com.arquiteturaweb.estoque.entities.Estoque;
 import com.arquiteturaweb.estoque.entities.dto.produto.ProdutoResumoDTO;
 
 public class EstoqueResponseDTO {
@@ -40,6 +41,14 @@ public class EstoqueResponseDTO {
 
     public void setProduto(ProdutoResumoDTO produto) {
         this.produto = produto;
+    }
+
+    public static EstoqueResponseDTO converterEstoque(Estoque estoque) {
+        EstoqueResponseDTO responseDTO = new EstoqueResponseDTO();
+        responseDTO.setId(estoque.getId());
+        responseDTO.setProduto(ProdutoResumoDTO.converterProduto(estoque.getProduto()));
+        responseDTO.setQuantidade(estoque.getQuantidade());
+        return responseDTO;
     }
 
 }

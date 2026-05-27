@@ -1,5 +1,7 @@
 package com.arquiteturaweb.estoque.entities.dto.categoria;
 
+import com.arquiteturaweb.estoque.entities.Categoria;
+
 public class CategoriaResumoDTO {
 
     private Long id;
@@ -28,6 +30,13 @@ public class CategoriaResumoDTO {
 
     public void setNome(String nome) {
         this.nome = nome;
+    }
+
+    public static CategoriaResumoDTO converterCategoria(Categoria categoria) {
+        CategoriaResumoDTO resumoObj = new CategoriaResumoDTO();
+        resumoObj.setId(categoria.getId());
+        resumoObj.setNome(categoria.getNome());
+        return resumoObj;
     }
 
 }

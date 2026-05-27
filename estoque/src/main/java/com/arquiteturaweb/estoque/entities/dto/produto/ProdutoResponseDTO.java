@@ -1,7 +1,10 @@
 package com.arquiteturaweb.estoque.entities.dto.produto;
 
+import java.util.HashSet;
 import java.util.Set;
+import java.util.stream.Collectors;
 
+import com.arquiteturaweb.estoque.entities.Produto;
 import com.arquiteturaweb.estoque.entities.dto.categoria.CategoriaResumoDTO;
 import com.arquiteturaweb.estoque.entities.dto.estoque.EstoqueResumoDTO;
 import com.arquiteturaweb.estoque.entities.dto.fornecedor.FornecedorResumoDTO;
@@ -12,7 +15,7 @@ public class ProdutoResponseDTO {
     private String nome;
     private String descricao;
     private Double preco;
-    private Set<CategoriaResumoDTO> categorias;
+    private Set<CategoriaResumoDTO> categorias = new HashSet<>();
     private FornecedorResumoDTO fornecedor;
     private EstoqueResumoDTO estoque;
 
@@ -20,12 +23,11 @@ public class ProdutoResponseDTO {
         
     }
 
-    public ProdutoResponseDTO(Long id, String nome, String descricao, Double preco, Set<CategoriaResumoDTO> categorias, FornecedorResumoDTO fornecedor, EstoqueResumoDTO estoque) {
+    public ProdutoResponseDTO(Long id, String nome, String descricao, Double preco, FornecedorResumoDTO fornecedor, EstoqueResumoDTO estoque) {
         this.id = id;
         this.nome = nome;
         this.descricao = descricao;
         this.preco = preco;
-        this.categorias = categorias;
         this.fornecedor = fornecedor;
         this.estoque = estoque;
     }
@@ -66,10 +68,6 @@ public class ProdutoResponseDTO {
         return categorias;
     }
 
-    public void setCategorias(Set<CategoriaResumoDTO> categorias) {
-        this.categorias = categorias;
-    }
-
     public FornecedorResumoDTO getFornecedor() {
         return fornecedor;
     }
@@ -84,6 +82,18 @@ public class ProdutoResponseDTO {
 
     public void setEstoque(EstoqueResumoDTO estoque) {
         this.estoque = estoque;
+    }
+
+    public static ProdutoResponseDTO converterProduto(Produto produto) {
+        ProdutoResponseDTO responseObj = new ProdutoResponseDTO();
+        responseObj.setId(produto.getId());
+        responseObj.setNome(produto.getNome());
+        responseObj.setDescricao(produto.getDescricao());
+        responseObj.setPreco(produto.getPreco());
+        responseObj.getCategorias().addAll(produto.getCategorias().stream().<CategoriaResumoDTO>map(c -> CategoriaResumoDTO.converterCategoria(c)).collect(Collectors.toList()));
+        responseObj.setFornecedor(FornecedorResumoDTO.converterFornecedor(produto.getFornecedor()));
+        responseObj.setEstoque(EstoqueResumoDTO.converterEstoque(produto.getEstoque()));
+        return responseObj;
     }
 
 }

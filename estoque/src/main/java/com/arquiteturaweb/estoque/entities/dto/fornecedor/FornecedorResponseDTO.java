@@ -1,8 +1,10 @@
 package com.arquiteturaweb.estoque.entities.dto.fornecedor;
 
 import java.util.Set;
+import java.util.stream.Collectors;
 
-import com.arquiteturaweb.estoque.entities.dto.produto.ProdutoResponseDTO;
+import com.arquiteturaweb.estoque.entities.Fornecedor;
+import com.arquiteturaweb.estoque.entities.dto.produto.ProdutoResumoDTO;
 
 public class FornecedorResponseDTO {
 
@@ -10,13 +12,13 @@ public class FornecedorResponseDTO {
     private String nome;
     private String endereco;
     private String telefone;
-    private Set<ProdutoResponseDTO> produtos;
+    private Set<ProdutoResumoDTO> produtos;
 
     public FornecedorResponseDTO() {
 
     }
 
-    public FornecedorResponseDTO(Long id, String nome, String endereco, String telefone, Set<ProdutoResponseDTO> produtos) {
+    public FornecedorResponseDTO(Long id, String nome, String endereco, String telefone, Set<ProdutoResumoDTO> produtos) {
         this.id = id;
         this.nome = nome;
         this.endereco = endereco;
@@ -56,12 +58,18 @@ public class FornecedorResponseDTO {
         this.telefone = telefone;
     }
 
-    public Set<ProdutoResponseDTO> getProdutos() {
+    public Set<ProdutoResumoDTO> getProdutos() {
         return produtos;
     }
 
-    public void setProdutos(Set<ProdutoResponseDTO> produtos) {
-        this.produtos = produtos;
+    public static FornecedorResponseDTO converterFornecedor(Fornecedor fornecedor) {
+        FornecedorResponseDTO responseObj = new FornecedorResponseDTO();
+        responseObj.setId(fornecedor.getIdFornecedor());
+        responseObj.setNome(fornecedor.getNomeFornecedor());
+        responseObj.setEndereco(fornecedor.getEnderecoFornecedor());
+        responseObj.setTelefone(fornecedor.getTelefoneFornecedor());
+        responseObj.getProdutos().addAll(fornecedor.getProdutos().stream().<ProdutoResumoDTO>map(p -> ProdutoResumoDTO.converterProduto(p)).collect(Collectors.toList()));
+        return responseObj;
     }
 
 }
