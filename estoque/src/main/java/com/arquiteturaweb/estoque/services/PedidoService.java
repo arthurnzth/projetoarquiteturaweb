@@ -9,16 +9,12 @@ import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.stereotype.Service;
 
-import com.arquiteturaweb.estoque.entities.Categoria;
 import com.arquiteturaweb.estoque.entities.Fornecedor;
 import com.arquiteturaweb.estoque.entities.Pedido;
 import com.arquiteturaweb.estoque.entities.dto.fornecedor.FornecedorRequestDTO;
 import com.arquiteturaweb.estoque.entities.dto.fornecedor.FornecedorResponseDTO;
 import com.arquiteturaweb.estoque.entities.dto.pedido.PedidoRequestDTO;
 import com.arquiteturaweb.estoque.entities.dto.pedido.PedidoResponseDTO;
-import com.arquiteturaweb.estoque.entities.Produto;
-import com.arquiteturaweb.estoque.entities.dto.produto.ProdutoRequestDTO;
-import com.arquiteturaweb.estoque.entities.dto.produto.ProdutoResponseDTO;
 import com.arquiteturaweb.estoque.repositories.FornecedorRepository;
 import com.arquiteturaweb.estoque.repositories.PedidoRepository;
 import com.arquiteturaweb.estoque.services.exceptions.DatabaseException;
@@ -60,7 +56,7 @@ public class PedidoService {
     // MÉTODO POST
     public PedidoResponseDTO save(PedidoRequestDTO requestObj){
         try{
-            Movimentacao movimentacao = movimentacaoRepository.findAllById(requestObj.getMovimentacaoId());
+            Movimentacao movimentacao = movimentacaoRepository.findAllById(requestObj.getMovimentacaoIdPedidoRequest());
     
             Fornecedor fornecedor = fornecedorRepository.findById(requestObj.getFornecedorIdPedidoRequest()).orElseThrow(() -> new ResourceNotFoundException(requestObj.getFornecedorIdPedidoRequest()));
     
