@@ -1,18 +1,24 @@
 package com.arquiteturaweb.estoque.entities.dto.usuario;
 
-public class UsuarioResponseDTO {
+import java.io.Serializable;
+
+import com.arquiteturaweb.estoque.entities.Usuario;
+
+public class UsuarioResponseDTO implements Serializable {
+
+    private static final long serialVersionUID = 1L;
 
     private Long id;
     private String nome;
     private String email;
     private String cargo;
-    private Boolean ativo;
+    private String ativo;
 
     public UsuarioResponseDTO() {
 
     }
 
-    public UsuarioResponseDTO(Long id, String nome, String email, String cargo, Boolean ativo) {
+    public UsuarioResponseDTO(Long id, String nome, String email, String cargo, String ativo) {
         this.id = id;
         this.nome = nome;
         this.email = email;
@@ -52,11 +58,22 @@ public class UsuarioResponseDTO {
         this.cargo = cargo;
     }
 
-    public Boolean getAtivo() {
+    public String getAtivo() {
         return ativo;
     }
 
-    public void setAtivo(Boolean ativo) {
+    public void setAtivo(String ativo) {
         this.ativo = ativo;
     }
+
+    public static UsuarioResponseDTO converterUsuario(Usuario usuario) {
+        UsuarioResponseDTO responseObj = new UsuarioResponseDTO();
+        responseObj.setId(usuario.getId());
+        responseObj.setNome(usuario.getNome());
+        responseObj.setEmail(usuario.getEmail());
+        responseObj.setCargo(usuario.getCargo());
+        responseObj.setAtivo(usuario.isAtivo() ? "ativo" : "desativado");
+        return responseObj;
+    }
+
 }

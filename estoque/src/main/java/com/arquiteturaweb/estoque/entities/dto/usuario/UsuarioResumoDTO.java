@@ -1,19 +1,27 @@
 package com.arquiteturaweb.estoque.entities.dto.usuario;
 
-public class UsuarioResumoDTO {
+import java.io.Serializable;
+
+import com.arquiteturaweb.estoque.entities.Usuario;
+
+public class UsuarioResumoDTO implements Serializable {
+
+    private static final long serialVersionUID = 1L;
 
     private Long id;
     private String nome;
     private String cargo;
+    private String ativo;
 
     public UsuarioResumoDTO() {
 
     }
 
-    public UsuarioResumoDTO(Long id, String nome, String cargo) {
+    public UsuarioResumoDTO(Long id, String nome, String cargo, String ativo) {
         this.id = id;
         this.nome = nome;
         this.cargo = cargo;
+        this.ativo = ativo;
     }
 
     public Long getId() {
@@ -39,4 +47,22 @@ public class UsuarioResumoDTO {
     public void setCargo(String cargo) {
         this.cargo = cargo;
     }
+
+    public String getAtivo() {
+        return ativo;
+    }
+
+    public void setAtivo(String ativo) {
+        this.ativo = ativo;
+    }
+
+    public static UsuarioResumoDTO converterUsuario(Usuario usuario) {
+        UsuarioResumoDTO resumoObj = new UsuarioResumoDTO();
+        resumoObj.setId(usuario.getId());
+        resumoObj.setNome(usuario.getNome());
+        resumoObj.setCargo(usuario.getCargo());
+        resumoObj.setAtivo(usuario.isAtivo() ? "ativo" : "desativado");
+        return resumoObj;
+    }
+
 }

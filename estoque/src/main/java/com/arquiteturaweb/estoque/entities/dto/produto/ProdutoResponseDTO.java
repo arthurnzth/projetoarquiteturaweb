@@ -10,7 +10,7 @@ import com.arquiteturaweb.estoque.entities.dto.categoria.CategoriaResumoDTO;
 import com.arquiteturaweb.estoque.entities.dto.estoque.EstoqueResumoDTO;
 import com.arquiteturaweb.estoque.entities.dto.fornecedor.FornecedorResumoDTO;
 
-public class ProdutoResponseDTO implements Serializable{
+public class ProdutoResponseDTO implements Serializable {
 
     private static final long serialVersionUID = 1L;
 

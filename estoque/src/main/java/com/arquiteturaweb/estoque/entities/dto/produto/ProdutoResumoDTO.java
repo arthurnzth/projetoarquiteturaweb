@@ -4,7 +4,7 @@ import java.io.Serializable;
 
 import com.arquiteturaweb.estoque.entities.Produto;
 
-public class ProdutoResumoDTO implements Serializable{
+public class ProdutoResumoDTO implements Serializable {
 
     private static final long serialVersionUID = 1L;
 

@@ -1,19 +1,22 @@
 package com.arquiteturaweb.estoque.entities.dto.cliente;
-public class ClienteRequestDTO {
+
+import java.io.Serializable;
+
+public class ClienteRequestDTO implements Serializable {
+
+    private static final long serialVersionUID = 1L;
 
     private String nome;
     private String cnpj;
-    private String endereco;
     private String contato;
 
     public ClienteRequestDTO() {
 
     }
 
-    public ClienteRequestDTO(String nome, String cnpj, String endereco, String contato) {
+    public ClienteRequestDTO(String nome, String cnpj, String contato) {
         this.nome = nome;
         this.cnpj = cnpj;
-        this.endereco = endereco;
         this.contato = contato;
     }
 
@@ -33,14 +36,6 @@ public class ClienteRequestDTO {
         this.cnpj = cnpj;
     }
 
-    public String getEndereco() {
-        return endereco;
-    }
-
-    public void setEndereco(String endereco) {
-        this.endereco = endereco;
-    }
-
     public String getContato() {
         return contato;
     }
@@ -48,4 +43,5 @@ public class ClienteRequestDTO {
     public void setContato(String contato) {
         this.contato = contato;
     }
+
 }

@@ -3,7 +3,7 @@ package com.arquiteturaweb.estoque.entities.dto.produto;
 import java.io.Serializable;
 import java.util.Set;
 
-public class ProdutoRequestDTO implements Serializable{
+public class ProdutoRequestDTO implements Serializable {
 
     private static final long serialVersionUID = 1L;
 
