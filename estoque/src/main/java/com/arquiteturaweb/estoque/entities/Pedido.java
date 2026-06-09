@@ -42,4 +42,36 @@ public class Pedido implements Serializable{
         // this.movimentacao = movimentacao;
     }
 
+    public Long getIdPedido(){
+        return this.id;
+    }
+
+    public void setIdPedido(Long id_novo){
+        this.id = id_novo;
+    }
+
+    public Double getValorTotalPedido(){
+        return this.valorTotal;
+    }
+
+    public void setValorTotalPedido(Double valorTotalPedido){
+        this.valorTotal = valorTotalPedido;
+    }
+
+    public Fornecedor getFornecedorPedido(){
+        return fornecedor;
+    }
+
+    public void setFornecedorPedido (Fornecedor fornecedor){
+        this.fornecedor = fornecedor;
+    }
+
+    //public Movimentacao getMovimentacaoPedido(){
+    //    return movimentacao;
+    //}
+
+    //public void setMovimentacaoPedido(Movimentacao movimentacao){
+    //    this.movimentacao = movimentacao;
+    //} 
+
 }
