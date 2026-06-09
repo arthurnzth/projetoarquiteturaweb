@@ -32,7 +32,7 @@ public class PedidoService {
     private FornecedorRepository fornecedorRepository;
 
     @Autowired
-    private MovimentacaoRepository movimentacaoRepository;
+    //private MovimentacaoRepository movimentacaoRepository;
 
     //MÉTODOS GET
 
@@ -54,27 +54,27 @@ public class PedidoService {
     }
 
     // MÉTODO POST
-    public PedidoResponseDTO save(PedidoRequestDTO requestObj){
-        try{
-            Movimentacao movimentacao = movimentacaoRepository.findAllById(requestObj.getMovimentacaoIdPedidoRequest());
+    //public PedidoResponseDTO save(PedidoRequestDTO requestObj){
+        //try{
+            //Movimentacao movimentacao = movimentacaoRepository.findAllById(requestObj.getMovimentacaoIdPedidoRequest());
     
-            Fornecedor fornecedor = fornecedorRepository.findById(requestObj.getFornecedorIdPedidoRequest()).orElseThrow(() -> new ResourceNotFoundException(requestObj.getFornecedorIdPedidoRequest()));
+            //Fornecedor fornecedor = fornecedorRepository.findById(requestObj.getFornecedorIdPedidoRequest()).orElseThrow(() -> new ResourceNotFoundException(requestObj.getFornecedorIdPedidoRequest()));
     
-            Pedido pedido = new Pedido(null, requestObj.getValorTotalRequestPedido(), fornecedor, movimentacao);
+            //Pedido pedido = new Pedido(null, requestObj.getValorTotalRequestPedido(), fornecedor, movimentacao);
 
-            Pedido pedidoNovo = pedidoRepositorio.save(pedido);
-        }catch (RuntimeException e) {
-            e.printStackTrace();
-            if(requestObj.getFornecedorIdPedidoRequest() == null){
-            throw new ResourceNotFoundException(requestObj.getFornecedorIdPedidoRequest());
-            }
-            if(requestObj.getMovimentacaoIdPedidoRequest() == null){
-            throw new ResourceNotFoundException(requestObj.getMovimentacaoIdPedidoRequest());
-            }
-        }catch (InterruptedException e) {
-            throw new DatabaseException(e.getMessage());
-        }
-    }
+            //Pedido pedidoNovo = pedidoRepositorio.save(pedido);
+        //}catch (RuntimeException e) {
+            //e.printStackTrace();
+            //if(requestObj.getFornecedorIdPedidoRequest() == null){
+            //throw new ResourceNotFoundException(requestObj.getFornecedorIdPedidoRequest());
+            //}
+            //if(requestObj.getMovimentacaoIdPedidoRequest() == null){
+            //throw new ResourceNotFoundException(requestObj.getMovimentacaoIdPedidoRequest());
+            //}
+        //}catch (InterruptedException e) {
+            //throw new DatabaseException(e.getMessage());
+        //}
+    //}
 
     //MÉTODO PUT
     public PedidoResponseDTO update(Long id, PedidoRequestDTO requestData){
@@ -93,7 +93,7 @@ public class PedidoService {
         try {
             entity.setValorTotalPedido(obj.getValorTotalRequestPedido());
             entity.setFornecedorPedido(fornecedorRepository.getReferenceById(obj.getFornecedorIdPedidoRequest()));
-            entity.setMovimentacaoPedido(movimentacaoRepository.getReferenceById(obj.getFornecedorIdPedidoRequest()));
+            //entity.setMovimentacaoPedido(movimentacaoRepository.getReferenceById(obj.getFornecedorIdPedidoRequest()));
 
         } catch (EntityNotFoundException e) {
             throw new ResourceNotFoundException(obj.getFornecedorIdPedidoRequest());

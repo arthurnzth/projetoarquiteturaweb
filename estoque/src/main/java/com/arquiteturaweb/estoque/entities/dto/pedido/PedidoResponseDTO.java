@@ -18,18 +18,18 @@ public class PedidoResponseDTO implements Serializable{
     private Long id;
     private Double valorTotal;
     private FornecedorResumoDTO fornecedor;
-    private MovimentacaoResumoDTO movimentacao;
+    //private MovimentacaoResumoDTO movimentacao;
 
     public PedidoResponseDTO(){
 
     }
 
-    public PedidoResponseDTO(Long id, Double valorTotal, FornecedorResumoDTO fornecedor, MovimentacaoResumoDTO movimentacao){
-        this.id = id;
-        this.valorTotal = valorTotal;
-        this.fornecedor = fornecedor;
-        this.movimentacao = movimentacao;
-    }
+    //public PedidoResponseDTO(Long id, Double valorTotal, FornecedorResumoDTO fornecedor, MovimentacaoResumoDTO movimentacao){
+       // this.id = id;
+        //this.valorTotal = valorTotal;
+        //this.fornecedor = fornecedor;
+        //this.movimentacao = movimentacao;
+    //}
 
     public Long getIdPedidoResponse() {
         return id;
@@ -55,18 +55,18 @@ public class PedidoResponseDTO implements Serializable{
         this.fornecedor = fornecedor;
     }
 
-    public MovimentacaoResumoDTO getMovimentacaoPedidoResponse() {
-        return movimentacao;
-    }
+    //public MovimentacaoResumoDTO getMovimentacaoPedidoResponse() {
+      //  return movimentacao;
+    //}
 
-    public void setMovimentacaoPedidoResponse(MovimentacaoResumoDTO movimentacao) {
-        this.movimentacao = movimentacao;
-    }
+    //public void setMovimentacaoPedidoResponse(MovimentacaoResumoDTO movimentacao) {
+        //this.movimentacao = movimentacao;
+    //}
 
     public static PedidoResponseDTO converterPedido(Pedido pedido) {
         PedidoResponseDTO responseObj = new PedidoResponseDTO();
         responseObj.setIdPedidoResponse(pedido.getIdPedido());
-        responseObj.setMovimentacaoPedidoResponse(pedido.getMovimentacaoPedido());
+        //responseObj.setMovimentacaoPedidoResponse(pedido.getMovimentacaoPedido());
         responseObj.setValorTotalPedidoResponse(pedido.getValorTotalPedido());
         responseObj.setFornecedorPedidoResponse(FornecedorResumoDTO.converterFornecedor(pedido.getFornecedorPedido()));
         return responseObj;

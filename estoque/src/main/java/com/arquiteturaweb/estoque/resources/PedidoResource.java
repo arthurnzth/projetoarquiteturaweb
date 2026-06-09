@@ -45,12 +45,12 @@ public class PedidoResource {
     //MÉTODO POST
 
     // Save
-    @PostMapping
-    public ResponseEntity<PedidoResponseDTO> save(@RequestBody PedidoRequestDTO obj) {
-        PedidoResponseDTO responseObj = service.save(obj);
-        URI uri = ServletUriComponentsBuilder.fromCurrentRequest().path("/{id}").buildAndExpand(responseObj.getIdPedidoResponse()).toUri();
-        return ResponseEntity.created(uri).body(responseObj);
-    }
+    //@PostMapping
+    //public ResponseEntity<PedidoResponseDTO> save(@RequestBody PedidoRequestDTO obj) {
+        //PedidoResponseDTO responseObj = service.save(obj);
+        //URI uri = ServletUriComponentsBuilder.fromCurrentRequest().path("/{id}").buildAndExpand(responseObj.getIdPedidoResponse()).toUri();
+        //return ResponseEntity.created(uri).body(responseObj);
+    //}
 
 
     //MÉTODO PUT

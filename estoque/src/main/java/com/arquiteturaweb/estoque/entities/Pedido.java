@@ -35,12 +35,12 @@ public class Pedido implements Serializable{
 
     }
 
-    public Pedido(Long id, Double valorTotal, Fornecedor fornecedor, Movimentacao movimentacao){
-        this.id = id;
-        this.valorTotal = valorTotal;
-        this.fornecedor = fornecedor;
+    //public Pedido(Long id, Double valorTotal, Fornecedor fornecedor, Movimentacao movimentacao){
+        //this.id = id;
+        //this.valorTotal = valorTotal;
+        //this.fornecedor = fornecedor;
         // this.movimentacao = movimentacao;
-    }
+    //}
 
     public Long getIdPedido(){
         return this.id;
