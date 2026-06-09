@@ -17,8 +17,6 @@ import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 import com.arquiteturaweb.estoque.entities.dto.pedido.PedidoRequestDTO;
 import com.arquiteturaweb.estoque.entities.dto.pedido.PedidoResponseDTO;
-import com.arquiteturaweb.estoque.entities.dto.produto.ProdutoRequestDTO;
-import com.arquiteturaweb.estoque.entities.dto.produto.ProdutoResponseDTO;
 import com.arquiteturaweb.estoque.services.PedidoService;
 
 @RestController
