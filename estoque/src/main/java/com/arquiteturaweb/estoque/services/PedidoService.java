@@ -5,6 +5,8 @@ import java.util.Optional;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.DataIntegrityViolationException;
+import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.stereotype.Service;
 
 import com.arquiteturaweb.estoque.entities.Categoria;
@@ -102,6 +104,17 @@ public class PedidoService {
         }
     }
 
+    //MÉTODO DELETE
+    public void delete(Long id) {
+
+        try {
+            pedidoRepositorio.deleteById(id);
+        } catch (EmptyResultDataAccessException e) {
+            throw new ResourceNotFoundException(id);
+        } catch (DataIntegrityViolationException e) {
+            throw new DatabaseException(e.getMessage());
+        }
+    }
 
 }
 
