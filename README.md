@@ -7,7 +7,7 @@ Projeto desenvolvido para a disciplina de Arquitetura de Aplicações Web, com o
 ## Colaboradores
 - [Arthur Abade Nazareth](https://github.com/Arthurnzth): Scrum Master e Desenvolvedor
 - [Diogo Silva Lana](https://github.com/Dhx27): Desenvolvedor
-- [Eduarda Piorotte](https://github.com/EduardaPiorotte): Tester Funcional;
+- [Eduarda Piorotte](https://github.com/EduardaPiorotte): Tester Funcional e unitário;
 - [Eduarda Nunis](https://github.com/EduardaSSN): Tester Unitário
 - [Maria Luiza Matos](https://github.com/Lubmatos): Tester Funcional e Unitário
 - [Pedro Lucas](https://github.com/Pedro-Ani-Lucas): Desenvolvedor
