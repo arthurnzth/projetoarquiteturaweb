@@ -2,6 +2,8 @@ package com.arquiteturaweb.estoque.entities;
 
 import java.io.Serializable;
 import java.time.Instant;
+import java.util.HashSet;
+import java.util.Set;
 
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -9,6 +11,7 @@ import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
+import jakarta.persistence.OneToMany;
 import jakarta.persistence.OneToOne;
 import jakarta.persistence.Table;
 
@@ -26,8 +29,6 @@ public class Venda implements Serializable{
     @JoinColumn(name = "cliente_id")
     private Cliente cliente;
 
-    private Double valorTotal;
-
     private Instant data;
 
     @OneToOne(mappedBy = "movimentacao")
@@ -36,6 +37,9 @@ public class Venda implements Serializable{
     @ManyToOne
     @JoinColumn(name = "usuario_id")
     private Usuario responsavel;
+
+    @OneToMany(mappedBy = "id.venda")
+    private Set<ItemVenda> itens = new HashSet<>();
 
     public Venda (){
 
@@ -66,14 +70,6 @@ public class Venda implements Serializable{
         this.cliente = cliente;
     }
 
-    public Double getValorTotalVenda() {
-        return valorTotal;
-    }
-
-    public void setValorTotalVenda(Double valorTotal) {
-        this.valorTotal = valorTotal;
-    }
-
     public Instant getDataVenda() {
         return data;
     }
@@ -96,6 +92,18 @@ public class Venda implements Serializable{
 
     public void setResponsavelVenda(Usuario responsavel) {
         this.responsavel = responsavel;
+    }
+
+    public Set<ItemVenda> getItens() {
+        return itens;
+    }
+
+    public Double getTotal() {
+        double sum = 0.0;
+        for (ItemVenda i : itens) {
+            sum += i.getSubTotal();
+        }
+        return sum;
     }
 
     @Override
