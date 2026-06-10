@@ -1,11 +1,14 @@
 package com.arquiteturaweb.estoque.entities;
 
 import java.io.Serializable;
+import java.util.HashSet;
+import java.util.Set;
 
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
 
 @Entity
@@ -22,6 +25,9 @@ public class Usuario implements Serializable {
     private String email;
     private String cargo;
     private Boolean ativo;
+
+    @OneToMany(mappedBy = "responsavel")
+    private Set<Movimentacao> movimentacoes = new HashSet<>();
 
     public Usuario(){
 

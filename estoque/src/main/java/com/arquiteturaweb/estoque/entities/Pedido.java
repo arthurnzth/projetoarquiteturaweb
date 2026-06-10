@@ -24,15 +24,12 @@ public class Pedido implements Serializable{
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    private Double valorTotal;
-
     @ManyToOne
     @JoinColumn(name = "fornecedor_id")
     private Fornecedor fornecedor; 
 
-    // Esperar a construção 
-    // @OneToOne(mappedBy = "movimentacao")
-    //private Movimentacao movimentacao;
+    @OneToOne(mappedBy = "pedido")
+    private Movimentacao movimentacao;
 
     @ManyToOne
     @JoinColumn(name = "usuario_id")
@@ -45,13 +42,12 @@ public class Pedido implements Serializable{
 
     }
 
-    //public Pedido(Long id, Double valorTotal, Fornecedor fornecedor, Movimentacao movimentacao, Usuario responsavel){
-        //this.id = id;
-        //this.valorTotal = valorTotal;
-        //this.fornecedor = fornecedor;
-        // this.movimentacao = movimentacao;
-        // this.responsavel = responsavel;
-    //}
+    public Pedido(Long id, Fornecedor fornecedor, Movimentacao movimentacao, Usuario responsavel){
+        this.id = id;
+        this.fornecedor = fornecedor;
+        this.movimentacao = movimentacao;
+        this.responsavel = responsavel;
+    }
 
     public Long getIdPedido(){
         return this.id;
@@ -59,14 +55,6 @@ public class Pedido implements Serializable{
 
     public void setIdPedido(Long id_novo){
         this.id = id_novo;
-    }
-
-    public Double getValorTotalPedido(){
-        return this.valorTotal;
-    }
-
-    public void setValorTotalPedido(Double valorTotalPedido){
-        this.valorTotal = valorTotalPedido;
     }
 
     public Fornecedor getFornecedorPedido(){
@@ -77,13 +65,13 @@ public class Pedido implements Serializable{
         this.fornecedor = fornecedor;
     }
 
-    //public Movimentacao getMovimentacaoPedido(){
-    //    return movimentacao;
-    //}
+    public Movimentacao getMovimentacaoPedido(){
+        return movimentacao;
+    }
 
-    //public void setMovimentacaoPedido(Movimentacao movimentacao){
-    //    this.movimentacao = movimentacao;
-    //} 
+    public void setMovimentacaoPedido(Movimentacao movimentacao){
+        this.movimentacao = movimentacao;
+    } 
     
     public Usuario getResponsavel() {
         return responsavel;

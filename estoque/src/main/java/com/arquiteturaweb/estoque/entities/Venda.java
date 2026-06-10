@@ -5,6 +5,8 @@ import java.time.Instant;
 import java.util.HashSet;
 import java.util.Set;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
+
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -29,10 +31,11 @@ public class Venda implements Serializable{
     @JoinColumn(name = "cliente_id")
     private Cliente cliente;
 
+    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd'T'HH:mm:ss'Z'", timezone = "GMT")
     private Instant data;
 
-    @OneToOne(mappedBy = "movimentacao")
-    //private Movimentacao movimentacao;
+    @OneToOne(mappedBy = "venda")
+    private Movimentacao movimentacao;
 
     @ManyToOne
     @JoinColumn(name = "usuario_id")
@@ -45,15 +48,14 @@ public class Venda implements Serializable{
 
     }
 
-    /*public Venda (Long id, Cliente cliente, Double valorTotal, Instant data, Movimentacao movimentacao, Usuario responsavel){
+    public Venda (Long id, Cliente cliente, Instant data, Movimentacao movimentacao, Usuario responsavel){
         this.id = id;
         this.cliente = cliente;
-        this.valorTotal = valorTotal;
         this.data = data;
         this.movimentacao = movimentacao;
         this.responsavel = responsavel;
     }
-    */
+    
     public Long getIdVenda() {
         return id;
     }
@@ -77,7 +79,7 @@ public class Venda implements Serializable{
     public void setDataVenda(Instant data) {
         this.data = data;
     }
-    /* 
+    
     public Movimentacao getMovimentacaoVenda() {
         return movimentacao;
     }
@@ -85,7 +87,7 @@ public class Venda implements Serializable{
     public void setMovimentacaoVenda(Movimentacao movimentacao) {
         this.movimentacao = movimentacao;
     }
-    */
+    
     public Usuario getResponsavelVenda() {
         return responsavel;
     }

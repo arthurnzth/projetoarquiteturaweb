@@ -1,1 +1,0 @@
-# Configuração de Chave Primária
