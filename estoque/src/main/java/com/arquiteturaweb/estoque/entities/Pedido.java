@@ -1,6 +1,8 @@
 package com.arquiteturaweb.estoque.entities;
 
 import java.io.Serializable;
+import java.util.HashSet;
+import java.util.Set;
 
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -8,6 +10,7 @@ import jakarta .persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
+import jakarta.persistence.OneToMany;
 import jakarta.persistence.OneToOne;
 import jakarta.persistence.Table;
 
@@ -31,15 +34,23 @@ public class Pedido implements Serializable{
     // @OneToOne(mappedBy = "movimentacao")
     //private Movimentacao movimentacao;
 
+    @ManyToOne
+    @JoinColumn(name = "usuario_id")
+    private Usuario responsavel;
+
+    @OneToMany(mappedBy = "id.pedido")
+    private Set<ItemPedido> itens = new HashSet<>();
+
     public Pedido(){
 
     }
 
-    //public Pedido(Long id, Double valorTotal, Fornecedor fornecedor, Movimentacao movimentacao){
+    //public Pedido(Long id, Double valorTotal, Fornecedor fornecedor, Movimentacao movimentacao, Usuario responsavel){
         //this.id = id;
         //this.valorTotal = valorTotal;
         //this.fornecedor = fornecedor;
         // this.movimentacao = movimentacao;
+        // this.responsavel = responsavel;
     //}
 
     public Long getIdPedido(){
@@ -73,6 +84,26 @@ public class Pedido implements Serializable{
     //public void setMovimentacaoPedido(Movimentacao movimentacao){
     //    this.movimentacao = movimentacao;
     //} 
+    
+    public Usuario getResponsavel() {
+        return responsavel;
+    }
+
+    public void setResponsavel(Usuario responsavel) {
+        this.responsavel = responsavel;
+    }
+
+    public Set<ItemPedido> getItens() {
+        return itens;
+    }
+
+    public Double getTotal() {
+        double sum = 0.0;
+        for (ItemPedido i : itens) {
+            sum += i.getSubTotal();
+        }
+        return sum;
+    }
 
     @Override
     public int hashCode() {
@@ -98,4 +129,5 @@ public class Pedido implements Serializable{
             return false;
         return true;
     }
+
 }
