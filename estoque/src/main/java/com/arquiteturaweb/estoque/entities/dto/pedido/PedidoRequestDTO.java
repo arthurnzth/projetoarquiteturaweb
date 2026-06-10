@@ -4,7 +4,7 @@ import java.io.Serializable;
 
 public class PedidoRequestDTO implements Serializable{
     
-    private static final Long serialVersionUID = 1L;
+    private static final long serialVersionUID = 1L;
 
     private Double valorTotal;
     private Long fornecedorId;
