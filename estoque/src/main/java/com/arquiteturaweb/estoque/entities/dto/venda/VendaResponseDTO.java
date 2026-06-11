@@ -1,9 +1,13 @@
 package com.arquiteturaweb.estoque.entities.dto.venda;
 
 import java.io.Serializable;
+import java.util.HashSet;
+import java.util.Set;
+import java.util.stream.Collectors;
 
 import com.arquiteturaweb.estoque.entities.Venda;
 import com.arquiteturaweb.estoque.entities.dto.cliente.ClienteResumoDTO;
+import com.arquiteturaweb.estoque.entities.dto.itemVenda.ItemVendaResumoDTO;
 import com.arquiteturaweb.estoque.entities.dto.movimentacao.MovimentacaoResumoDTO;
 import com.arquiteturaweb.estoque.entities.dto.usuario.UsuarioResumoDTO;
 
@@ -16,19 +20,20 @@ public class VendaResponseDTO implements Serializable {
     private Double valorTotal;
     private String data;
     private MovimentacaoResumoDTO movimentacao;
-    private UsuarioResumoDTO usuario;
+    private UsuarioResumoDTO responsavel;
+    private Set<ItemVendaResumoDTO> itens = new HashSet<>();
 
     public VendaResponseDTO() {
 
     }
 
-    public VendaResponseDTO(Long id, ClienteResumoDTO cliente, Double valorTotal, String data, MovimentacaoResumoDTO movimentacao, UsuarioResumoDTO usuario) {
+    public VendaResponseDTO(Long id, ClienteResumoDTO cliente, Double valorTotal, String data, MovimentacaoResumoDTO movimentacao, UsuarioResumoDTO responsavel) {
         this.id = id;
         this.cliente = cliente;
         this.valorTotal = valorTotal;
         this.data = data;
         this.movimentacao = movimentacao;
-        this.usuario = usuario;
+        this.responsavel = responsavel;
     }
 
     public Long getId() {
@@ -71,12 +76,16 @@ public class VendaResponseDTO implements Serializable {
         this.movimentacao = movimentacao;
     }
 
-    public UsuarioResumoDTO getUsuario() {
-        return usuario;
+    public UsuarioResumoDTO getResponsavel() {
+        return responsavel;
     }
 
-    public void setUsuario(UsuarioResumoDTO usuario) {
-        this.usuario = usuario;
+    public void setResponsavel(UsuarioResumoDTO responsavel) {
+        this.responsavel = responsavel;
+    }
+
+    public Set<ItemVendaResumoDTO> getItens() {
+        return itens;
     }
 
     public static VendaResponseDTO converterVenda(Venda venda) {
@@ -88,7 +97,8 @@ public class VendaResponseDTO implements Serializable {
         if (venda.getMovimentacaoVenda() != null) {
             responseObj.setMovimentacao(MovimentacaoResumoDTO.converterMovimentacao(venda.getMovimentacaoVenda()));
         }
-        responseObj.setUsuario(UsuarioResumoDTO.converterUsuario(venda.getResponsavelVenda()));
+        responseObj.setResponsavel(UsuarioResumoDTO.converterUsuario(venda.getResponsavelVenda()));
+        responseObj.getItens().addAll(venda.getItens().stream().<ItemVendaResumoDTO>map(i -> ItemVendaResumoDTO.converterItemVenda(i)).collect(Collectors.toList()));
         return responseObj;
     }
 
