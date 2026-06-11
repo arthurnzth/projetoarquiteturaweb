@@ -1,9 +1,13 @@
 package com.arquiteturaweb.estoque.entities.dto.venda;
 
 import java.io.Serializable;
+import java.util.HashSet;
+import java.util.Set;
+import java.util.stream.Collectors;
 
 import com.arquiteturaweb.estoque.entities.Venda;
 import com.arquiteturaweb.estoque.entities.dto.cliente.ClienteResumoDTO;
+import com.arquiteturaweb.estoque.entities.dto.itemVenda.ItemVendaResumoDTO;
 
 public class VendaResumoDTO implements Serializable {
 
@@ -12,6 +16,7 @@ public class VendaResumoDTO implements Serializable {
     private Long id;
     private ClienteResumoDTO cliente;
     private String data;
+    private Set<ItemVendaResumoDTO> itens = new HashSet<>();
 
     public VendaResumoDTO() {
         
@@ -47,11 +52,16 @@ public class VendaResumoDTO implements Serializable {
         this.data = data;
     }
 
+    public Set<ItemVendaResumoDTO> getItens() {
+        return itens;
+    }
+
     public static VendaResumoDTO converterVenda(Venda venda) {
         VendaResumoDTO resumoObj = new VendaResumoDTO();
         resumoObj.setId(venda.getIdVenda());
         resumoObj.setCliente(ClienteResumoDTO.converterCliente(venda.getClienteVenda()));
         resumoObj.setData(venda.getDataVenda().toString());
+        resumoObj.getItens().addAll(venda.getItens().stream().<ItemVendaResumoDTO>map(i -> ItemVendaResumoDTO.converterItemVenda(i)).collect(Collectors.toList()));
         return resumoObj;
     }
 

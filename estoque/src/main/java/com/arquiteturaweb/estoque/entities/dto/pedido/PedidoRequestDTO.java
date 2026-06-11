@@ -14,16 +14,18 @@ public class PedidoRequestDTO implements Serializable{
     private String data;
     private Long responsavelId;
     private List<ItemPedidoRequestDTO> itens = new ArrayList<>();
+    private String observacao;
 
     public PedidoRequestDTO(){
 
     }
 
-    public PedidoRequestDTO(Long fornecedorId, String data, Long responsavelId, List<ItemPedidoRequestDTO> itens){
+    public PedidoRequestDTO(Long fornecedorId, String data, Long responsavelId, List<ItemPedidoRequestDTO> itens, String observacao){
         this.fornecedorId = fornecedorId;
         this.data = data;
         this.responsavelId = responsavelId;
         this.itens = itens;
+        this.observacao = observacao;
     }
 
     public Long getFornecedorId() {
@@ -56,6 +58,14 @@ public class PedidoRequestDTO implements Serializable{
 
     public void setItens(List<ItemPedidoRequestDTO> itens) {
         this.itens = itens;
+    }
+
+    public String getObservacao() {
+        return observacao;
+    }
+
+    public void setObservacao(String observacao) {
+        this.observacao = observacao;
     }
 
 }

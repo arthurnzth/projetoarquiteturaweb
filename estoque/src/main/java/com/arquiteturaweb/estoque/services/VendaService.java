@@ -12,6 +12,7 @@ import org.springframework.stereotype.Service;
 
 import com.arquiteturaweb.estoque.entities.Cliente;
 import com.arquiteturaweb.estoque.entities.ItemVenda;
+import com.arquiteturaweb.estoque.entities.Movimentacao;
 import com.arquiteturaweb.estoque.entities.Usuario;
 import com.arquiteturaweb.estoque.entities.Venda;
 import com.arquiteturaweb.estoque.entities.dto.itemVenda.ItemVendaRequestDTO;
@@ -19,6 +20,7 @@ import com.arquiteturaweb.estoque.entities.dto.venda.VendaRequestDTO;
 import com.arquiteturaweb.estoque.entities.dto.venda.VendaResponseDTO;
 import com.arquiteturaweb.estoque.repositories.ClienteRepository;
 import com.arquiteturaweb.estoque.repositories.ItemVendaRepository;
+import com.arquiteturaweb.estoque.repositories.MovimentacaoRepository;
 import com.arquiteturaweb.estoque.repositories.ProdutoRepository;
 import com.arquiteturaweb.estoque.repositories.UsuarioRepository;
 import com.arquiteturaweb.estoque.repositories.VendaRepository;
@@ -44,6 +46,9 @@ public class VendaService {
 
     @Autowired
     private ItemVendaRepository itemVendaRepository;
+
+    @Autowired
+    private MovimentacaoRepository movimentacaoRepository;
 
     public List<VendaResponseDTO> findAll() {
 
@@ -78,7 +83,8 @@ public class VendaService {
 
             Venda vendaSalva = vendaRepository.save(venda);
 
-            // TODO: event: criação de Movimentacao
+            Movimentacao movimentacao = new Movimentacao(null, data, vendaSalva, responsavel, requestObj.getObservacao());
+            movimentacaoRepository.save(movimentacao);
 
             VendaResponseDTO responseObj = VendaResponseDTO.converterVenda(vendaSalva);
             return responseObj;

@@ -103,6 +103,22 @@ public class Movimentacao implements Serializable {
         this.observacao = observacao;
     }
 
+    public Venda getVenda() {
+        return venda;
+    }
+
+    public void setVenda(Venda venda) {
+        this.venda = venda;
+    }
+
+    public Pedido getPedido() {
+        return pedido;
+    }
+
+    public void setPedido(Pedido pedido) {
+        this.pedido = pedido;
+    }
+
     @Override
     public int hashCode() {
         final int prime = 31;

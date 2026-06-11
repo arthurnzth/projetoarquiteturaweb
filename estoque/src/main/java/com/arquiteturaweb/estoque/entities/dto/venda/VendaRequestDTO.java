@@ -14,16 +14,18 @@ public class VendaRequestDTO implements Serializable {
     private String data;
     private Long responsavelId;
     private List<ItemVendaRequestDTO> itens = new ArrayList<>();
+    private String observacao;
 
     public VendaRequestDTO() {
 
     }
 
-    public VendaRequestDTO(Long clienteId, String data, Long responsavelId, List<ItemVendaRequestDTO> itens) {
+    public VendaRequestDTO(Long clienteId, String data, Long responsavelId, List<ItemVendaRequestDTO> itens, String observacao) {
         this.clienteId = clienteId;
         this.data = data;
         this.responsavelId = responsavelId;
         this.itens = itens;
+        this.observacao = observacao;
     }
 
     public Long getClienteId() {
@@ -56,6 +58,14 @@ public class VendaRequestDTO implements Serializable {
 
     public void setItens(List<ItemVendaRequestDTO> itens) {
         this.itens = itens;
+    }
+
+    public String getObservacao() {
+        return observacao;
+    }
+
+    public void setObservacao(String observacao) {
+        this.observacao = observacao;
     }
 
 }

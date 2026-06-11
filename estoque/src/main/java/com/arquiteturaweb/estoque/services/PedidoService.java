@@ -12,6 +12,7 @@ import org.springframework.stereotype.Service;
 
 import com.arquiteturaweb.estoque.entities.Fornecedor;
 import com.arquiteturaweb.estoque.entities.ItemPedido;
+import com.arquiteturaweb.estoque.entities.Movimentacao;
 import com.arquiteturaweb.estoque.entities.Pedido;
 import com.arquiteturaweb.estoque.entities.Usuario;
 import com.arquiteturaweb.estoque.entities.dto.itemPedido.ItemPedidoRequestDTO;
@@ -19,6 +20,7 @@ import com.arquiteturaweb.estoque.entities.dto.pedido.PedidoRequestDTO;
 import com.arquiteturaweb.estoque.entities.dto.pedido.PedidoResponseDTO;
 import com.arquiteturaweb.estoque.repositories.FornecedorRepository;
 import com.arquiteturaweb.estoque.repositories.ItemPedidoRepository;
+import com.arquiteturaweb.estoque.repositories.MovimentacaoRepository;
 import com.arquiteturaweb.estoque.repositories.PedidoRepository;
 import com.arquiteturaweb.estoque.repositories.ProdutoRepository;
 import com.arquiteturaweb.estoque.repositories.UsuarioRepository;
@@ -46,7 +48,7 @@ public class PedidoService {
     private ItemPedidoRepository itemPedidoRepository;
 
     @Autowired
-    //private MovimentacaoRepository movimentacaoRepository;
+    private MovimentacaoRepository movimentacaoRepository;
 
     //MÉTODOS GET
 
@@ -87,7 +89,8 @@ public class PedidoService {
 
             Pedido pedidoSalvo = pedidoRepository.save(pedido);
 
-            // TODO: event: criação de Movimentacao
+            Movimentacao movimentacao = new Movimentacao(null, data, pedidoSalvo, responsavel, requestObj.getObservacao());
+            movimentacaoRepository.save(movimentacao);
 
             PedidoResponseDTO responseObj = PedidoResponseDTO.converterPedido(pedidoSalvo);
             return responseObj;
