@@ -93,10 +93,11 @@ public class PedidoService {
                 estoqueService.adicionar(produtoRepository.getReferenceById(i.getProdutoId()), i.getQuantidade());
             }
 
-            Pedido pedidoSalvo = pedidoRepository.save(pedido);
-
-            Movimentacao movimentacao = new Movimentacao(null, data, pedidoSalvo, responsavel, requestObj.getObservacao());
+            Movimentacao movimentacao = new Movimentacao(null, data, pedido, responsavel, requestObj.getObservacao());
             movimentacaoRepository.save(movimentacao);
+            pedido.setMovimentacaoPedido(movimentacao);
+
+            Pedido pedidoSalvo = pedidoRepository.save(pedido);
 
             PedidoResponseDTO responseObj = PedidoResponseDTO.converterPedido(pedidoSalvo);
             return responseObj;

@@ -87,11 +87,12 @@ public class VendaService {
                 estoqueService.remover(produtoRepository.getReferenceById(i.getProdutoId()), i.getQuantidade());
             }
 
-            Venda vendaSalva = vendaRepository.save(venda);
-
-            Movimentacao movimentacao = new Movimentacao(null, data, vendaSalva, responsavel, requestObj.getObservacao());
+            Movimentacao movimentacao = new Movimentacao(null, data, venda, responsavel, requestObj.getObservacao());
             movimentacaoRepository.save(movimentacao);
+            venda.setMovimentacaoVenda(movimentacao);
 
+            Venda vendaSalva = vendaRepository.save(venda);
+            
             VendaResponseDTO responseObj = VendaResponseDTO.converterVenda(vendaSalva);
             return responseObj;
 
