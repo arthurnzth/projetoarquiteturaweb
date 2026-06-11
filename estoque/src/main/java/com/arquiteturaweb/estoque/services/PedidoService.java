@@ -14,8 +14,6 @@ import com.arquiteturaweb.estoque.entities.Fornecedor;
 import com.arquiteturaweb.estoque.entities.ItemPedido;
 import com.arquiteturaweb.estoque.entities.Pedido;
 import com.arquiteturaweb.estoque.entities.Usuario;
-import com.arquiteturaweb.estoque.entities.dto.fornecedor.FornecedorRequestDTO;
-import com.arquiteturaweb.estoque.entities.dto.fornecedor.FornecedorResponseDTO;
 import com.arquiteturaweb.estoque.entities.dto.itemPedido.ItemPedidoRequestDTO;
 import com.arquiteturaweb.estoque.entities.dto.pedido.PedidoRequestDTO;
 import com.arquiteturaweb.estoque.entities.dto.pedido.PedidoResponseDTO;
