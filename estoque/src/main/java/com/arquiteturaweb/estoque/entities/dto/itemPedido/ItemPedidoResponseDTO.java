@@ -1,23 +1,23 @@
-package com.arquiteturaweb.estoque.entities.dto.itemVenda;
+package com.arquiteturaweb.estoque.entities.dto.itemPedido;
 
 import java.io.Serializable;
 
-import com.arquiteturaweb.estoque.entities.ItemVenda;
+import com.arquiteturaweb.estoque.entities.ItemPedido;
 import com.arquiteturaweb.estoque.entities.dto.produto.ProdutoResumoDTO;
 
-public class ItemVendaResponseDTO implements Serializable {
-
+public class ItemPedidoResponseDTO implements Serializable{
+    
     private static final long serialVersionUID = 1L;
 
     private ProdutoResumoDTO produto;
     private Integer quantidade;
     private Double subTotal;
 
-    public ItemVendaResponseDTO() {
-        
+    public ItemPedidoResponseDTO() {
+
     }
 
-    public ItemVendaResponseDTO(ProdutoResumoDTO produto, Integer quantidade, Double subTotal) {
+    public ItemPedidoResponseDTO(ProdutoResumoDTO produto, Integer quantidade, Double subTotal) {
         this.produto = produto;
         this.quantidade = quantidade;
         this.subTotal = subTotal;
@@ -46,9 +46,9 @@ public class ItemVendaResponseDTO implements Serializable {
     public void setSubTotal(Double subTotal) {
         this.subTotal = subTotal;
     }
-
-    public static ItemVendaResponseDTO converterItemVenda(ItemVenda item) {
-        ItemVendaResponseDTO responseObj = new ItemVendaResponseDTO();
+    
+    public static ItemPedidoResponseDTO converterItemPedido(ItemPedido item) {
+        ItemPedidoResponseDTO responseObj = new ItemPedidoResponseDTO();
         responseObj.setProduto(ProdutoResumoDTO.converterProduto(item.getProduto()));
         responseObj.setQuantidade(item.getQuantidade());
         responseObj.setSubTotal(item.getSubTotal());

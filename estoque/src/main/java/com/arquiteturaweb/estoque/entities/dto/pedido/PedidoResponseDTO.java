@@ -2,75 +2,104 @@ package com.arquiteturaweb.estoque.entities.dto.pedido;
 
 import java.io.Serializable;
 import java.util.HashSet;
+import java.util.Set;
 import java.util.stream.Collectors;
 
 import com.arquiteturaweb.estoque.entities.Pedido;
-import com.arquiteturaweb.estoque.entities.Produto;
-import com.arquiteturaweb.estoque.entities.dto.categoria.CategoriaResumoDTO;
-import com.arquiteturaweb.estoque.entities.dto.estoque.EstoqueResumoDTO;
 import com.arquiteturaweb.estoque.entities.dto.fornecedor.FornecedorResumoDTO;
-import com.arquiteturaweb.estoque.entities.dto.produto.ProdutoResponseDTO;
+import com.arquiteturaweb.estoque.entities.dto.itemPedido.ItemPedidoResumoDTO;
+import com.arquiteturaweb.estoque.entities.dto.movimentacao.MovimentacaoResumoDTO;
+import com.arquiteturaweb.estoque.entities.dto.usuario.UsuarioResumoDTO;
 
 public class PedidoResponseDTO implements Serializable{
     
     private static final long serialVersionUID = 1L;
 
     private Long id;
-    private Double valorTotal;
     private FornecedorResumoDTO fornecedor;
-    //private MovimentacaoResumoDTO movimentacao;
+    private Double valorTotal;
+    private String data;
+    private MovimentacaoResumoDTO movimentacao;
+    private UsuarioResumoDTO responsavel;
+    private Set<ItemPedidoResumoDTO> itens = new HashSet<>();
 
     public PedidoResponseDTO(){
 
     }
 
-    //public PedidoResponseDTO(Long id, Double valorTotal, FornecedorResumoDTO fornecedor, MovimentacaoResumoDTO movimentacao){
-       // this.id = id;
-        //this.valorTotal = valorTotal;
-        //this.fornecedor = fornecedor;
-        //this.movimentacao = movimentacao;
-    //}
+    public PedidoResponseDTO(Long id, FornecedorResumoDTO fornecedor, Double valorTotal, String data, MovimentacaoResumoDTO movimentacao, UsuarioResumoDTO responsavel) {
+        this.id = id;
+        this.fornecedor = fornecedor;
+        this.valorTotal = valorTotal;
+        this.data = data;
+        this.movimentacao = movimentacao;
+        this.responsavel = responsavel;
+    }
 
-    public Long getIdPedidoResponse() {
+    public Long getId() {
         return id;
     }
 
-    public void setIdPedidoResponse(Long id) {
+    public void setId(Long id) {
         this.id = id;
     }
 
-    public Double getValorTotalPedidoResponse() {
-        return valorTotal;
-    }
-
-    public void setValorTotalPedidoResponse(Double valorTotal) {
-        this.valorTotal = valorTotal;
-    }
-
-    public FornecedorResumoDTO getFornecedorPedidoResponse() {
+    public FornecedorResumoDTO getFornecedor() {
         return fornecedor;
     }
 
-    public void setFornecedorPedidoResponse(FornecedorResumoDTO fornecedor) {
+    public void setFornecedor(FornecedorResumoDTO fornecedor) {
         this.fornecedor = fornecedor;
     }
 
-    //public MovimentacaoResumoDTO getMovimentacaoPedidoResponse() {
-      //  return movimentacao;
-    //}
+    public Double getValorTotal() {
+        return valorTotal;
+    }
 
-    //public void setMovimentacaoPedidoResponse(MovimentacaoResumoDTO movimentacao) {
-        //this.movimentacao = movimentacao;
-    //}
+    public void setValorTotal(Double valorTotal) {
+        this.valorTotal = valorTotal;
+    }
+
+    public String getData() {
+        return data;
+    }
+
+    public void setData(String data) {
+        this.data = data;
+    }
+
+    public MovimentacaoResumoDTO getMovimentacao() {
+        return movimentacao;
+    }
+
+    public void setMovimentacao(MovimentacaoResumoDTO movimentacao) {
+        this.movimentacao = movimentacao;
+    }
+
+    public UsuarioResumoDTO getResponsavel() {
+        return responsavel;
+    }
+
+    public void setResponsavel(UsuarioResumoDTO responsavel) {
+        this.responsavel = responsavel;
+    }
+
+    public Set<ItemPedidoResumoDTO> getItens() {
+        return itens;
+    }
 
     public static PedidoResponseDTO converterPedido(Pedido pedido) {
         PedidoResponseDTO responseObj = new PedidoResponseDTO();
-        responseObj.setIdPedidoResponse(pedido.getIdPedido());
-        //responseObj.setMovimentacaoPedidoResponse(pedido.getMovimentacaoPedido());
-        responseObj.setValorTotalPedidoResponse(pedido.getValorTotalPedido());
-        responseObj.setFornecedorPedidoResponse(FornecedorResumoDTO.converterFornecedor(pedido.getFornecedorPedido()));
+        responseObj.setId(pedido.getIdPedido());
+        responseObj.setFornecedor(FornecedorResumoDTO.converterFornecedor(pedido.getFornecedorPedido()));
+        responseObj.setValorTotal(pedido.getTotal());
+        responseObj.setData(pedido.getDataPedido().toString());
+        if (pedido.getMovimentacaoPedido() != null) {
+            responseObj.setMovimentacao(MovimentacaoResumoDTO.converterMovimentacao(pedido.getMovimentacaoPedido()));
+        }
+        responseObj.setResponsavel(UsuarioResumoDTO.converterUsuario(pedido.getResponsavel()));
+        responseObj.getItens().addAll(pedido.getItens().stream().<ItemPedidoResumoDTO>map(i -> ItemPedidoResumoDTO.converterItemPedido(i)).collect(Collectors.toList()));
         return responseObj;
     }
 
-    
 }

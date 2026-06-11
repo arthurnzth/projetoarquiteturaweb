@@ -1,49 +1,61 @@
 package com.arquiteturaweb.estoque.entities.dto.pedido;
 
 import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.List;
+
+import com.arquiteturaweb.estoque.entities.dto.itemPedido.ItemPedidoRequestDTO;
 
 public class PedidoRequestDTO implements Serializable{
     
     private static final long serialVersionUID = 1L;
 
-    private Double valorTotal;
     private Long fornecedorId;
-    private Long movimentacaoId;
+    private String data;
+    private Long responsavelId;
+    private List<ItemPedidoRequestDTO> itens = new ArrayList<>();
 
     public PedidoRequestDTO(){
 
     }
 
-    public PedidoRequestDTO(Double valorTotal, Long fornecedorId, Long movimentacaoId){
-        this.valorTotal = valorTotal;
+    public PedidoRequestDTO(Long fornecedorId, String data, Long responsavelId, List<ItemPedidoRequestDTO> itens){
         this.fornecedorId = fornecedorId;
-        this.movimentacaoId = movimentacaoId;
+        this.data = data;
+        this.responsavelId = responsavelId;
+        this.itens = itens;
     }
 
-
-    public Double getValorTotalRequestPedido() {
-        return valorTotal;
-    }
-
-    public void setValorTotalRequestPedido(Double valorTotal) {
-        this.valorTotal = valorTotal;
-    }
-
-    public Long getFornecedorIdPedidoRequest() {
+    public Long getFornecedorId() {
         return fornecedorId;
     }
 
-    public void setFornecedorIdPedidoRequest(Long fornecedorId) {
+    public void setFornecedorId(Long fornecedorId) {
         this.fornecedorId = fornecedorId;
     }
 
-    public Long getMovimentacaoIdPedidoRequest() {
-        return movimentacaoId;
+    public String getData() {
+        return data;
     }
 
-    public void setMovimentacaoIdPedidoRequest(Long movimentacaoId) {
-        this.movimentacaoId = movimentacaoId;
+    public void setData(String data) {
+        this.data = data;
     }
 
+    public Long getResponsavelId() {
+        return responsavelId;
+    }
+
+    public void setResponsavelId(Long responsavelId) {
+        this.responsavelId = responsavelId;
+    }
+
+    public List<ItemPedidoRequestDTO> getItens() {
+        return itens;
+    }
+
+    public void setItens(List<ItemPedidoRequestDTO> itens) {
+        this.itens = itens;
+    }
 
 }

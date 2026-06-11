@@ -1,23 +1,23 @@
-package com.arquiteturaweb.estoque.entities.dto.itemVenda;
+package com.arquiteturaweb.estoque.entities.dto.itemPedido;
 
 import java.io.Serializable;
 
-import com.arquiteturaweb.estoque.entities.ItemVenda;
+import com.arquiteturaweb.estoque.entities.ItemPedido;
 import com.arquiteturaweb.estoque.entities.dto.produto.ProdutoResumoDTO;
 
-public class ItemVendaResponseDTO implements Serializable {
+public class ItemPedidoResumoDTO implements Serializable {
 
     private static final long serialVersionUID = 1L;
-
+    
     private ProdutoResumoDTO produto;
     private Integer quantidade;
     private Double subTotal;
 
-    public ItemVendaResponseDTO() {
+    public ItemPedidoResumoDTO() {
         
     }
 
-    public ItemVendaResponseDTO(ProdutoResumoDTO produto, Integer quantidade, Double subTotal) {
+    public ItemPedidoResumoDTO(ProdutoResumoDTO produto, Integer quantidade, Double subTotal) {
         this.produto = produto;
         this.quantidade = quantidade;
         this.subTotal = subTotal;
@@ -47,12 +47,12 @@ public class ItemVendaResponseDTO implements Serializable {
         this.subTotal = subTotal;
     }
 
-    public static ItemVendaResponseDTO converterItemVenda(ItemVenda item) {
-        ItemVendaResponseDTO responseObj = new ItemVendaResponseDTO();
-        responseObj.setProduto(ProdutoResumoDTO.converterProduto(item.getProduto()));
-        responseObj.setQuantidade(item.getQuantidade());
-        responseObj.setSubTotal(item.getSubTotal());
-        return responseObj;
+    public static ItemPedidoResumoDTO converterItemPedido(ItemPedido item) {
+        ItemPedidoResumoDTO resumoObj = new ItemPedidoResumoDTO();
+        resumoObj.setProduto(ProdutoResumoDTO.converterProduto(item.getProduto()));
+        resumoObj.setQuantidade(item.getQuantidade());
+        resumoObj.setSubTotal(item.getSubTotal());
+        return resumoObj;
     }
 
 }

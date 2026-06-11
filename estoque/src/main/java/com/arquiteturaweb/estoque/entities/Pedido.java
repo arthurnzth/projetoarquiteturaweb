@@ -1,8 +1,11 @@
 package com.arquiteturaweb.estoque.entities;
 
 import java.io.Serializable;
+import java.time.Instant;
 import java.util.HashSet;
 import java.util.Set;
+
+import com.fasterxml.jackson.annotation.JsonFormat;
 
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -28,6 +31,9 @@ public class Pedido implements Serializable{
     @JoinColumn(name = "fornecedor_id")
     private Fornecedor fornecedor; 
 
+    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd'T'HH:mm:ss'Z'", timezone = "GMT")
+    private Instant data;
+
     @OneToOne(mappedBy = "pedido")
     private Movimentacao movimentacao;
 
@@ -42,9 +48,10 @@ public class Pedido implements Serializable{
 
     }
 
-    public Pedido(Long id, Fornecedor fornecedor, Movimentacao movimentacao, Usuario responsavel){
+    public Pedido(Long id, Fornecedor fornecedor, Instant data, Movimentacao movimentacao, Usuario responsavel){
         this.id = id;
         this.fornecedor = fornecedor;
+        this.data = data;
         this.movimentacao = movimentacao;
         this.responsavel = responsavel;
     }
@@ -63,6 +70,14 @@ public class Pedido implements Serializable{
 
     public void setFornecedorPedido (Fornecedor fornecedor){
         this.fornecedor = fornecedor;
+    }
+
+    public Instant getDataPedido() {
+        return data;
+    }
+
+    public void setDataPedido(Instant data) {
+        this.data = data;
     }
 
     public Movimentacao getMovimentacaoPedido(){
