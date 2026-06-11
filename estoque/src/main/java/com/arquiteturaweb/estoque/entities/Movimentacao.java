@@ -50,9 +50,11 @@ public class Movimentacao implements Serializable {
         this.data = data;
         if (entidade.getClass() == Venda.class) {
             setTipo(TipoMovimentacao.SAIDA);
+            this.venda = (Venda)entidade;
         }
         else if (entidade.getClass() == Pedido.class) {
             setTipo(TipoMovimentacao.ENTRADA);
+            this.pedido = (Pedido)entidade;
         }
         else {
             throw new IllegalArgumentException("Tipo de objeto de movimentação inválido");

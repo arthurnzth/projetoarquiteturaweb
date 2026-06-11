@@ -10,14 +10,14 @@ public class EstoqueResponseDTO implements Serializable{
     private static final long serialVersionUID = 1L;
 
     private Long id;
-    private Long quantidade;
+    private Integer quantidade;
     private ProdutoResumoDTO produto;
 
     public EstoqueResponseDTO() {
 
     }
 
-    public EstoqueResponseDTO(Long id, Long quantidade, ProdutoResumoDTO produto) {
+    public EstoqueResponseDTO(Long id, Integer quantidade, ProdutoResumoDTO produto) {
         this.id = id;
         this.quantidade = quantidade;
         this.produto = produto;
@@ -31,11 +31,11 @@ public class EstoqueResponseDTO implements Serializable{
         this.id = id;
     }
 
-    public Long getQuantidade() {
+    public Integer getQuantidade() {
         return quantidade;
     }
 
-    public void setQuantidade(Long quantidade) {
+    public void setQuantidade(Integer quantidade) {
         this.quantidade = quantidade;
     }
 

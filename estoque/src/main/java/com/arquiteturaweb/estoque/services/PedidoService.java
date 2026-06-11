@@ -50,6 +50,9 @@ public class PedidoService {
     @Autowired
     private MovimentacaoRepository movimentacaoRepository;
 
+    @Autowired
+    private EstoqueService estoqueService;
+
     //MÉTODOS GET
 
     //FUNÇÃO DE LISTAR TODOS OS PEDIDOS
@@ -81,10 +84,13 @@ public class PedidoService {
 
             Pedido pedido = new Pedido(null, fornecedor, data, null, responsavel);
 
+            pedidoRepository.save(pedido);
+
             for (ItemPedidoRequestDTO i : requestObj.getItens()) {
                 ItemPedido item = new ItemPedido(pedido, produtoRepository.getReferenceById(i.getProdutoId()), i.getQuantidade(), produtoRepository.getReferenceById(i.getProdutoId()).getPreco());
                 itemPedidoRepository.save(item);
                 pedido.getItens().add(item);
+                estoqueService.adicionar(produtoRepository.getReferenceById(i.getProdutoId()), i.getQuantidade());
             }
 
             Pedido pedidoSalvo = pedidoRepository.save(pedido);

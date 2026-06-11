@@ -20,7 +20,7 @@ public class Estoque implements Serializable {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    private Long quantidade;
+    private Integer quantidade;
 
     @OneToOne
     @JoinColumn(name = "produto_id")
@@ -32,7 +32,7 @@ public class Estoque implements Serializable {
 
     public Estoque(Long id, Produto produto) {
         this.id = id;
-        this.quantidade = 0L;
+        this.quantidade = 0;
         this.produto = produto;
     }
 
@@ -44,11 +44,11 @@ public class Estoque implements Serializable {
         this.id = id;
     }
 
-    public Long getQuantidade() {
+    public Integer getQuantidade() {
         return quantidade;
     }
 
-    public void setQuantidade(Long quantidade) {
+    public void setQuantidade(Integer quantidade) {
         this.quantidade = quantidade;
     }
 

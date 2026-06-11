@@ -12,6 +12,7 @@ import com.arquiteturaweb.estoque.entities.Produto;
 import com.arquiteturaweb.estoque.entities.dto.estoque.EstoqueResponseDTO;
 import com.arquiteturaweb.estoque.repositories.EstoqueRepository;
 import com.arquiteturaweb.estoque.repositories.ProdutoRepository;
+import com.arquiteturaweb.estoque.services.exceptions.DatabaseException;
 import com.arquiteturaweb.estoque.services.exceptions.ResourceNotFoundException;
 
 @Service
@@ -42,11 +43,22 @@ public class EstoqueService {
         Estoque estoque = new Estoque();
         Produto produto = produtoRepository.findById(produtoId).orElseThrow(() -> new ResourceNotFoundException(produtoId));
         estoque.setProduto(produto);
-        estoque.setQuantidade(0L);
+        estoque.setQuantidade(0);
         estoqueRepository.save(estoque);
         produto.setEstoque(estoque);
         produtoRepository.save(produto);
 
+    }
+
+    public void adicionar(Produto produto, Integer quantidade) {
+        produto.getEstoque().setQuantidade(produto.getEstoque().getQuantidade() + quantidade);
+    }
+
+    public void remover(Produto produto, Integer quantidade) {
+        if (produto.getEstoque().getQuantidade() < quantidade) {
+            throw new DatabaseException("Estoque insuficiente");
+        }
+        produto.getEstoque().setQuantidade(produto.getEstoque().getQuantidade() - quantidade);
     }
 
 }

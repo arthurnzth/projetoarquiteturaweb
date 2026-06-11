@@ -93,6 +93,6 @@ class EstoqueServiceTest {
 
         service.criarEstoqueInicial(1L);
 
-        assertEquals(0L, produto.getEstoque().getQuantidade());
+        assertEquals(0, produto.getEstoque().getQuantidade());
     }
 }

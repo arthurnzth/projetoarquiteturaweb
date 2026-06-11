@@ -50,6 +50,9 @@ public class VendaService {
     @Autowired
     private MovimentacaoRepository movimentacaoRepository;
 
+    @Autowired
+    private EstoqueService estoqueService;
+
     public List<VendaResponseDTO> findAll() {
 
         List<Venda> vendas = vendaRepository.findAll();
@@ -75,10 +78,13 @@ public class VendaService {
 
             Venda venda = new Venda(null, cliente, data, null, responsavel);
 
+            vendaRepository.save(venda);
+
             for (ItemVendaRequestDTO i : requestObj.getItens()) {
                 ItemVenda item = new ItemVenda(venda, produtoRepository.getReferenceById(i.getProdutoId()), i.getQuantidade(), produtoRepository.getReferenceById(i.getProdutoId()).getPreco());
                 itemVendaRepository.save(item);
                 venda.getItens().add(item);
+                estoqueService.remover(produtoRepository.getReferenceById(i.getProdutoId()), i.getQuantidade());
             }
 
             Venda vendaSalva = vendaRepository.save(venda);
