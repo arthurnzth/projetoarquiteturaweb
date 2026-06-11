@@ -16,7 +16,7 @@ Projeto desenvolvido no 5º semestre do curso de Ciência da Computação, com o
 
 ## 🚩 Introdução
 
-O presente trabalho foi desenvolvido para a disciplina de Artquitetura de Aplicações Web, tendo como objetivo a criação de uma API REST para gerenciamento de estoque utilizando tecnologias modernas do ecossistema Java.
+O presente trabalho foi desenvolvido para a disciplina de Arquitetura de Aplicações Web, tendo como objetivo a criação de uma API REST para gerenciamento de estoque utilizando tecnologias modernas do ecossistema Java.
 
 O sistema foi projetado para controlar produtos, fornecedores, clientes, movimentações de entrada e saída, pedidos de compra, vendas e usuários responsáveis pelas operações. A aplicação segue uma arquitetura em camadas, baseada nos princípios da arquitetura REST e do framework Spring Boot, proporcionando organização, escalabilidade e facilidade de manutenção.
 
@@ -138,9 +138,9 @@ Todas as funções de *cadastro*, *consulta*, *consulta por id*, *atualização*
 
 O projeto atingiu seu objetivo de desenvolver uma API REST para gerenciamento de estoque utilizando tecnologias modernas do ecossistema Java. A solução implementada permite controlar produtos, fornecedores, cliente, pedidos, vendas e movimentações de forma centralizada e organizada.
 
-A utilização do Spring Boot proporcionou rapider no desenvolvimento e facilidade de manutenção, enquanto o uso do Apache Kafka agregou recursos de comunicação assíncroma, mesmo que dentro do próprio microsserviço, tornando a arquitetura mais escalável e colocando em prática o aprendizado de sala de aula.
+A utilização do Spring Boot proporcionou rapidez no desenvolvimento e facilidade de manutenção, enquanto o uso do Apache Kafka agregou recursos de comunicação assíncroma, mesmo que dentro do próprio microsserviço, tornando a arquitetura mais escalável e colocando em prática o aprendizado de sala de aula.
 
-O sistema demonstra a aplicação prática dos conceitos estudados na disciplina de Arquitetura de Aplicações Web e de outras disciplinas anteriormente vistas, contemplando modelagem de dados, desenvolvimento de APIs REST, persistência com JPA Hibernate e integração por eventos. Tais pontos aproximam essa aplicação numa concretização robusta para ser implementada além do projeto da faculdade, mostrando seu potencial e possibilidades de aprimoramentos.
+O sistema demonstra a aplicação prática dos conceitos estudados na disciplina de Arquitetura de Aplicações Web e de outras disciplinas anteriormente vistas, contemplando modelagem de dados, desenvolvimento de APIs REST, persistência com JPA Hibernate e integração por eventos. Tais pontos aproximam essa aplicação de uma concretização robusta para ser implementada além do projeto da faculdade, mostrando seu potencial e possibilidades de aprimoramentos.
 
 ---
 
